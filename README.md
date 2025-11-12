@@ -38,7 +38,7 @@ Go-Kratos学习项目
 │ ├── conf  // 内部使用的config的结构定义，使用proto格式生成
 │ │ ├── conf.pb.go
 │ │ └── conf.proto
-│ ├── data  // 业务数据访问，包含 cache、db 等封装，实现了 biz 的 repo 接口。我们可能会把 data 与 dao 混淆在一起，data 偏重业务的含义，它所要做的是将领域对象重新拿出来，我们去掉了 DDD 的 infra层。
+│ ├── data  // 业务数据访问，包含 cache、db 等封装，实现了 biz 的 repo 接口。
 │ │ ├── README.md
 │ │ ├── data.go
 │ │ └── greeter.go
@@ -62,6 +62,57 @@ Go-Kratos学习项目
         └── validate.proto
 ```
 
+特别说明：
+biz层中定义了实体类，实体操作接口Repo，实体Usecase。
+data层定义了“实体操作接口Repo”的实现。并支持通过data进行增强。
+service层可以通过biz.实体Usecase来操作数据。
+实体Usecase：提供数据操作逻辑。
+实体操作接口Repo：提供操作数据的sql实现。
+
+## 服务访问流程
+
+RPC服务：浏览器 --> server/grpc.go --> service --> biz --> data
+HTTP服务：浏览器 --> server/http.go --> service --> biz --> data
+
+
+# proto文件说明
+
+```prototext
+
+
+```
+
+# 创建项目
+
+```shell
+# 创建一个基本的项目
+kratos new boss -r https://gitee.com/go-kratos/kratos-layout.git --nomod
+# 删除无用的代码
+rm -rf boss/LICENSE boss/openapi.yaml boss/api/helloworld
+rm -rf boss/internal/biz/greeter.go boss/internal/biz/README.md boss/internal/biz/README.md   boss/api/helloword 
+rm -rf boss/internal/data/greeter.go boss/internal/data/README.md boss/internal/service/greeter.go boss/internal/service/README.md
+rm -rf boss/third_party/README.md boss/README.md
+# 添加实体的proto文件
+cd boss
+kratos proto add api/base/base.proto
+kratos proto client api/base/base.proto
+kratos proto add api/user/user.proto
+# 调整user.proto的内容，定义增删改查接口
+kratos proto client api/user/user.proto
+kratos proto server api/user/user.proto -t internal/service
+# 调整下面文件
+# boss/internal/service/service.go 将NewUserService加入为服务提供者
+# boss/internal/server/grpc.go 将Service注入服务中进去
+# boss/internal/server/http.go 将Service注入服务中进去
+# 手写biz中的user.go文件和内容 并调整biz.go文件内容
+# 手写data中的user.go文件和内容 并调整data.go文件内容
+# 在boss/internal/service/service.go 实现通过biz.UserUsecase构造UserService
+
+# 重新生成boss/cmd/boss/wire_gen.go文件
+go get github.com/google/wire/cmd/wire@latest
+go run github.com/google/wire/cmd/wire ./...
+
+```
 
 
 

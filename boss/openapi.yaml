@@ -1,0 +1,451 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: User API
+    version: 0.0.1
+paths:
+    /api/user:
+        post:
+            tags:
+                - User
+            operationId: User_CreateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/:id:
+        get:
+            tags:
+                - User
+            operationId: User_GetUser
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        put:
+            tags:
+                - User
+            operationId: User_UpdateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - User
+            operationId: User_DeleteUser
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/list:
+        post:
+            tags:
+                - User
+            operationId: User_ListUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ListUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/page:
+        post:
+            tags:
+                - User
+            operationId: User_PageUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PageUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PageUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/v1:
+        post:
+            tags:
+                - User
+            operationId: User_CreateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/v1/:id:
+        get:
+            tags:
+                - User
+            operationId: User_GetUser
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        put:
+            tags:
+                - User
+            operationId: User_UpdateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - User
+            operationId: User_DeleteUser
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/v1/list:
+        post:
+            tags:
+                - User
+            operationId: User_ListUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ListUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/user/v1/page:
+        post:
+            tags:
+                - User
+            operationId: User_PageUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PageUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PageUserReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+components:
+    schemas:
+        CreateUserReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    $ref: '#/components/schemas/UserReply'
+        CreateUserRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                age:
+                    type: integer
+                    format: int32
+                email:
+                    type: string
+                password:
+                    type: string
+        DeleteUserReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+        GetUserReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    $ref: '#/components/schemas/UserReply'
+        GoogleProtobufAny:
+            type: object
+            properties:
+                '@type':
+                    type: string
+                    description: The type of the serialized message.
+            additionalProperties: true
+            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        ListUserReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/UserReply'
+        ListUserRequest:
+            type: object
+            properties:
+                sort:
+                    $ref: '#/components/schemas/SortReq'
+                query:
+                    $ref: '#/components/schemas/QueryUserRequest'
+        PageReq:
+            type: object
+            properties:
+                pageSize:
+                    type: integer
+                    format: int32
+                page:
+                    type: integer
+                    format: int32
+        PageResp:
+            type: object
+            properties:
+                total:
+                    type: string
+        PageUserReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                page:
+                    $ref: '#/components/schemas/PageResp'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/UserReply'
+        PageUserRequest:
+            type: object
+            properties:
+                page:
+                    $ref: '#/components/schemas/PageReq'
+                sort:
+                    $ref: '#/components/schemas/SortReq'
+                query:
+                    $ref: '#/components/schemas/QueryUserRequest'
+        QueryUserRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                age:
+                    type: integer
+                    format: int32
+        ResultResp:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    format: int32
+                msg:
+                    type: string
+        SortReq:
+            type: object
+            properties:
+                order:
+                    type: string
+                sort:
+                    type: string
+        Status:
+            type: object
+            properties:
+                code:
+                    type: integer
+                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+                    format: int32
+                message:
+                    type: string
+                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+                details:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/GoogleProtobufAny'
+                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        UpdateUserReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    $ref: '#/components/schemas/UserReply'
+        UpdateUserRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                age:
+                    type: integer
+                    format: int32
+                email:
+                    type: string
+        UserReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                age:
+                    type: integer
+                    format: int32
+                email:
+                    type: string
+tags:
+    - name: User

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package api.base;
+
+option go_package = "boss/api/base;base";
+option java_multiple_files = true;
+option java_package = "api.base";
+
+message SortReq{
+  string order  = 1;
+  string sort  = 2;
+}
+
+message PageReq{
+  int32 page_size = 1;
+  int32 page = 2;
+}
+
+message ResultResp{
+  int32 code  = 1;
+  string msg = 2;
+}
+
+message PageResp{
+  int64 total  = 1;
+}

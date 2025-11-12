@@ -1,0 +1,142 @@
+syntax = "proto3";
+
+package api.user;
+
+import "google/api/annotations.proto";
+
+import "api/base/base.proto";
+
+option go_package = "boss/api/user;user";
+option java_multiple_files = true;
+option java_package = "api.user";
+
+service User {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserReply){
+    option (google.api.http) = {
+      post: "/api/user/v1",
+      body: "*",
+      additional_bindings {
+        // 额外的设定/api/user请求路径也是匹配当前入口
+        post: "/api/user",
+        body: "*",
+      }
+    };
+  };
+  rpc UpdateUser (UpdateUserRequest) returns (UpdateUserReply){
+    option (google.api.http) = {
+      put: "/api/user/v1/:id",
+      body: "*",
+      additional_bindings {
+        put: "/api/user/:id",
+        body: "*",
+      }
+    };
+  };
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply){
+    option (google.api.http) = {
+      delete: "/api/user/v1/:id",
+      additional_bindings {
+        delete: "/api/user/:id",
+      }
+    };
+  };
+  rpc GetUser (GetUserRequest) returns (GetUserReply){
+    option (google.api.http) = {
+      get: "/api/user/v1/:id",
+      additional_bindings {
+        get: "/api/user/:id",
+      }
+    };
+  };
+  rpc ListUser (ListUserRequest) returns (ListUserReply){
+    option (google.api.http) = {
+      post: "/api/user/v1/list",
+      body: "*",
+      additional_bindings {
+        post: "/api/user/list",
+        body: "*",
+      }
+    };
+  };
+  rpc PageUser (PageUserRequest) returns (PageUserReply){
+    option (google.api.http) = {
+      post: "/api/user/v1/page",
+      body: "*",
+      additional_bindings {
+        post: "/api/user/page",
+        body: "*",
+      }
+    };
+  };
+}
+
+message UserReply{
+  int64  id = 1;
+  string name = 2;
+  int32 age = 3;
+  string email = 4;
+}
+
+message CreateUserRequest {
+  string name = 1;
+  int32 age = 2;
+  string email = 3;
+  string password = 4;
+}
+message CreateUserReply {
+  base.ResultResp r = 1;
+  UserReply data = 2;
+}
+
+message UpdateUserRequest {
+  int64  id = 1;
+  string name = 2;
+  int32 age = 3;
+  string email = 4;
+}
+message UpdateUserReply {
+  base.ResultResp r = 1;
+  UserReply data = 2;
+}
+
+message DeleteUserRequest {
+  int64  id = 1;
+}
+message DeleteUserReply {
+  base.ResultResp r = 1;
+}
+
+message GetUserRequest {
+  int64  id = 1;
+
+}
+message GetUserReply {
+  base.ResultResp r = 1;
+  UserReply data = 2;
+}
+
+message QueryUserRequest{
+  string name = 1;
+  int32 age = 2;
+}
+
+message ListUserRequest {
+  base.SortReq sort = 1;
+  QueryUserRequest query = 2;
+}
+message ListUserReply {
+  base.ResultResp r = 1;
+  repeated UserReply data = 2;
+}
+
+message PageUserRequest {
+  base.PageReq page = 1;
+  base.SortReq sort = 2;
+  QueryUserRequest query = 3;
+}
+
+message PageUserReply{
+  base.ResultResp r = 1;
+  base.PageResp page = 2;
+  repeated UserReply data = 3;
+}
