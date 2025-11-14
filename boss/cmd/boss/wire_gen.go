@@ -31,8 +31,11 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	userRepo := data.NewUserRepo(dataData, logger)
 	userUsecase := biz.NewUserUsecase(userRepo, logger)
 	userService := service.NewUserService(userUsecase)
-	grpcServer := server.NewGRPCServer(confServer, userService, logger)
-	httpServer := server.NewHTTPServer(confServer, userService, logger)
+	roleRepo := data.NewRoleRepo(dataData, logger)
+	roleUsecase := biz.NewRoleUsecase(roleRepo, logger)
+	roleService := service.NewRoleService(roleUsecase)
+	grpcServer := server.NewGRPCServer(confServer, userService, roleService, logger)
+	httpServer := server.NewHTTPServer(confServer, userService, roleService, logger)
 	app := newApp(logger, grpcServer, httpServer)
 	return app, func() {
 		cleanup()
