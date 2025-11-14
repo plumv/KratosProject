@@ -1,7 +1,7 @@
 package server
 
 import (
-	"boss/api/user"
+	"api/boss"
 	"boss/internal/conf"
 	"boss/internal/service"
 
@@ -11,7 +11,10 @@ import (
 )
 
 // NewHTTPServer new an HTTP server.
-func NewHTTPServer(c *conf.Server, userService *service.UserService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server,
+	userService *service.UserService,
+	roleService *service.RoleService,
+	logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
@@ -27,6 +30,7 @@ func NewHTTPServer(c *conf.Server, userService *service.UserService, logger log.
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
 	srv := http.NewServer(opts...)
-	user.RegisterUserHTTPServer(srv, userService)
+	boss.RegisterUserHTTPServer(srv, userService)
+	boss.RegisterRoleHTTPServer(srv, roleService)
 	return srv
 }

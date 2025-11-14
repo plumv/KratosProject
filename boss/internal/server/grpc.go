@@ -1,7 +1,7 @@
 package server
 
 import (
-	"boss/api/user"
+	"api/boss"
 	"boss/internal/conf"
 	"boss/internal/service"
 
@@ -11,7 +11,10 @@ import (
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, userService *service.UserService, logger log.Logger) *grpc.Server {
+func NewGRPCServer(c *conf.Server,
+	userService *service.UserService,
+	roleService *service.RoleService,
+	logger log.Logger) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
@@ -27,6 +30,7 @@ func NewGRPCServer(c *conf.Server, userService *service.UserService, logger log.
 		opts = append(opts, grpc.Timeout(c.Grpc.Timeout.AsDuration()))
 	}
 	srv := grpc.NewServer(opts...)
-	user.RegisterUserServer(srv, userService)
+	boss.RegisterUserServer(srv, userService)
+	boss.RegisterRoleServer(srv, roleService)
 	return srv
 }

@@ -4,7 +4,7 @@ import (
 	"boss/internal/biz"
 	"context"
 
-	pb "boss/api/user"
+	pb "api/boss"
 )
 
 type UserService struct {
@@ -13,7 +13,9 @@ type UserService struct {
 }
 
 func NewUserService(uc *biz.UserUsecase) *UserService {
-	return &UserService{uc: uc}
+	return &UserService{
+		uc: uc,
+	}
 }
 
 func (s *UserService) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*pb.CreateUserReply, error) {
