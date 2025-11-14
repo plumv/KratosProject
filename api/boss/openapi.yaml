@@ -3,9 +3,149 @@
 
 openapi: 3.0.3
 info:
-    title: User API
+    title: ""
     version: 0.0.1
 paths:
+    /api/role:
+        post:
+            tags:
+                - Role
+            operationId: Role_CreateRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateRoleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/role/:id:
+        get:
+            tags:
+                - Role
+            operationId: Role_GetRole
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        put:
+            tags:
+                - Role
+            operationId: Role_UpdateRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateRoleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+        delete:
+            tags:
+                - Role
+            operationId: Role_DeleteRole
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/role/list:
+        post:
+            tags:
+                - Role
+            operationId: Role_ListRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ListRoleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ListRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
+    /api/role/page:
+        post:
+            tags:
+                - Role
+            operationId: Role_PageRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/PageRoleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/PageRoleReply'
+                default:
+                    description: Default error response
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Status'
     /api/user:
         post:
             tags:
@@ -146,148 +286,22 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Status'
-    /api/user/v1:
-        post:
-            tags:
-                - User
-            operationId: User_CreateUser
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/CreateUserRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/CreateUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /api/user/v1/:id:
-        get:
-            tags:
-                - User
-            operationId: User_GetUser
-            parameters:
-                - name: id
-                  in: query
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GetUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-        put:
-            tags:
-                - User
-            operationId: User_UpdateUser
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UpdateUserRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/UpdateUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-        delete:
-            tags:
-                - User
-            operationId: User_DeleteUser
-            parameters:
-                - name: id
-                  in: query
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/DeleteUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /api/user/v1/list:
-        post:
-            tags:
-                - User
-            operationId: User_ListUser
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/ListUserRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ListUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /api/user/v1/page:
-        post:
-            tags:
-                - User
-            operationId: User_PageUser
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/PageUserRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/PageUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
 components:
     schemas:
+        CreateRoleReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    $ref: '#/components/schemas/RoleReply'
+        CreateRoleRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                desc:
+                    type: string
         CreateUserReply:
             type: object
             properties:
@@ -307,11 +321,23 @@ components:
                     type: string
                 password:
                     type: string
+        DeleteRoleReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
         DeleteUserReply:
             type: object
             properties:
                 r:
                     $ref: '#/components/schemas/ResultResp'
+        GetRoleReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    $ref: '#/components/schemas/RoleReply'
         GetUserReply:
             type: object
             properties:
@@ -327,6 +353,22 @@ components:
                     description: The type of the serialized message.
             additionalProperties: true
             description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+        ListRoleReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoleReply'
+        ListRoleRequest:
+            type: object
+            properties:
+                sort:
+                    $ref: '#/components/schemas/SortReq'
+                query:
+                    $ref: '#/components/schemas/QueryRoleRequest'
         ListUserReply:
             type: object
             properties:
@@ -357,6 +399,26 @@ components:
             properties:
                 total:
                     type: string
+        PageRoleReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                page:
+                    $ref: '#/components/schemas/PageResp'
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RoleReply'
+        PageRoleRequest:
+            type: object
+            properties:
+                page:
+                    $ref: '#/components/schemas/PageReq'
+                sort:
+                    $ref: '#/components/schemas/SortReq'
+                query:
+                    $ref: '#/components/schemas/QueryRoleRequest'
         PageUserReply:
             type: object
             properties:
@@ -377,6 +439,14 @@ components:
                     $ref: '#/components/schemas/SortReq'
                 query:
                     $ref: '#/components/schemas/QueryUserRequest'
+        QueryRoleRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                age:
+                    type: integer
+                    format: int32
         QueryUserRequest:
             type: object
             properties:
@@ -392,6 +462,15 @@ components:
                     type: integer
                     format: int32
                 msg:
+                    type: string
+        RoleReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
                     type: string
         SortReq:
             type: object
@@ -416,6 +495,22 @@ components:
                         $ref: '#/components/schemas/GoogleProtobufAny'
                     description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
             description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
+        UpdateRoleReply:
+            type: object
+            properties:
+                r:
+                    $ref: '#/components/schemas/ResultResp'
+                data:
+                    $ref: '#/components/schemas/RoleReply'
+        UpdateRoleRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
+                    type: string
         UpdateUserReply:
             type: object
             properties:
@@ -448,4 +543,5 @@ components:
                 email:
                     type: string
 tags:
+    - name: Role
     - name: User

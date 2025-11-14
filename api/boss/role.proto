@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package boss;
+import "base/base.proto";
+
+option go_package = "api/boss;boss";
+
+message RoleReply{
+  int64  id = 1;
+  string name = 2;
+  string desc = 3;
+}
+message CreateRoleRequest {
+  string name = 1;
+  string desc = 2;
+}
+message UpdateRoleRequest {
+  int64  id = 1;
+  string name = 2;
+  string desc = 3;
+}
+
+
+message CreateRoleReply {
+  base.ResultResp r = 1;
+  RoleReply data = 2;
+}
+message UpdateRoleReply {
+  base.ResultResp r = 1;
+  RoleReply data = 2;
+}
+
+message DeleteRoleRequest {
+  int64  id = 1;
+}
+message DeleteRoleReply {
+  base.ResultResp r = 1;
+}
+
+message GetRoleRequest {
+  int64  id = 1;
+
+}
+message GetRoleReply {
+  base.ResultResp r = 1;
+  RoleReply data = 2;
+}
+
+message QueryRoleRequest{
+  string name = 1;
+  int32 age = 2;
+}
+
+message ListRoleRequest {
+  base.SortReq sort = 1;
+  QueryRoleRequest query = 2;
+}
+message ListRoleReply {
+  base.ResultResp r = 1;
+  repeated RoleReply data = 2;
+}
+
+message PageRoleRequest {
+  base.PageReq page = 1;
+  base.SortReq sort = 2;
+  QueryRoleRequest query = 3;
+}
+
+message PageRoleReply{
+  base.ResultResp r = 1;
+  base.PageResp page = 2;
+  repeated RoleReply data = 3;
+}

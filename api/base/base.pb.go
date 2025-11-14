@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.10
 // 	protoc        v5.29.3
-// source: api/base/base.proto
+// source: base/base.proto
 
 package base
 
@@ -31,7 +31,7 @@ type SortReq struct {
 
 func (x *SortReq) Reset() {
 	*x = SortReq{}
-	mi := &file_api_base_base_proto_msgTypes[0]
+	mi := &file_base_base_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *SortReq) String() string {
 func (*SortReq) ProtoMessage() {}
 
 func (x *SortReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_base_base_proto_msgTypes[0]
+	mi := &file_base_base_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *SortReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SortReq.ProtoReflect.Descriptor instead.
 func (*SortReq) Descriptor() ([]byte, []int) {
-	return file_api_base_base_proto_rawDescGZIP(), []int{0}
+	return file_base_base_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *SortReq) GetOrder() string {
@@ -83,7 +83,7 @@ type PageReq struct {
 
 func (x *PageReq) Reset() {
 	*x = PageReq{}
-	mi := &file_api_base_base_proto_msgTypes[1]
+	mi := &file_base_base_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -95,7 +95,7 @@ func (x *PageReq) String() string {
 func (*PageReq) ProtoMessage() {}
 
 func (x *PageReq) ProtoReflect() protoreflect.Message {
-	mi := &file_api_base_base_proto_msgTypes[1]
+	mi := &file_base_base_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -108,7 +108,7 @@ func (x *PageReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PageReq.ProtoReflect.Descriptor instead.
 func (*PageReq) Descriptor() ([]byte, []int) {
-	return file_api_base_base_proto_rawDescGZIP(), []int{1}
+	return file_base_base_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *PageReq) GetPageSize() int32 {
@@ -135,7 +135,7 @@ type ResultResp struct {
 
 func (x *ResultResp) Reset() {
 	*x = ResultResp{}
-	mi := &file_api_base_base_proto_msgTypes[2]
+	mi := &file_base_base_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -147,7 +147,7 @@ func (x *ResultResp) String() string {
 func (*ResultResp) ProtoMessage() {}
 
 func (x *ResultResp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_base_base_proto_msgTypes[2]
+	mi := &file_base_base_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -160,7 +160,7 @@ func (x *ResultResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ResultResp.ProtoReflect.Descriptor instead.
 func (*ResultResp) Descriptor() ([]byte, []int) {
-	return file_api_base_base_proto_rawDescGZIP(), []int{2}
+	return file_base_base_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ResultResp) GetCode() int32 {
@@ -186,7 +186,7 @@ type PageResp struct {
 
 func (x *PageResp) Reset() {
 	*x = PageResp{}
-	mi := &file_api_base_base_proto_msgTypes[3]
+	mi := &file_base_base_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -198,7 +198,7 @@ func (x *PageResp) String() string {
 func (*PageResp) ProtoMessage() {}
 
 func (x *PageResp) ProtoReflect() protoreflect.Message {
-	mi := &file_api_base_base_proto_msgTypes[3]
+	mi := &file_base_base_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -211,7 +211,7 @@ func (x *PageResp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PageResp.ProtoReflect.Descriptor instead.
 func (*PageResp) Descriptor() ([]byte, []int) {
-	return file_api_base_base_proto_rawDescGZIP(), []int{3}
+	return file_base_base_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *PageResp) GetTotal() int64 {
@@ -221,11 +221,11 @@ func (x *PageResp) GetTotal() int64 {
 	return 0
 }
 
-var File_api_base_base_proto protoreflect.FileDescriptor
+var File_base_base_proto protoreflect.FileDescriptor
 
-const file_api_base_base_proto_rawDesc = "" +
+const file_base_base_proto_rawDesc = "" +
 	"\n" +
-	"\x13api/base/base.proto\x12\bapi.base\"3\n" +
+	"\x0fbase/base.proto\x12\x04base\"3\n" +
 	"\aSortReq\x12\x14\n" +
 	"\x05order\x18\x01 \x01(\tR\x05order\x12\x12\n" +
 	"\x04sort\x18\x02 \x01(\tR\x04sort\":\n" +
@@ -237,29 +237,28 @@ const file_api_base_base_proto_rawDesc = "" +
 	"\x04code\x18\x01 \x01(\x05R\x04code\x12\x10\n" +
 	"\x03msg\x18\x02 \x01(\tR\x03msg\" \n" +
 	"\bPageResp\x12\x14\n" +
-	"\x05total\x18\x01 \x01(\x03R\x05totalB \n" +
-	"\bapi.baseP\x01Z\x12boss/api/base;baseb\x06proto3"
+	"\x05total\x18\x01 \x01(\x03R\x05totalB\x0fZ\rapi/base;baseb\x06proto3"
 
 var (
-	file_api_base_base_proto_rawDescOnce sync.Once
-	file_api_base_base_proto_rawDescData []byte
+	file_base_base_proto_rawDescOnce sync.Once
+	file_base_base_proto_rawDescData []byte
 )
 
-func file_api_base_base_proto_rawDescGZIP() []byte {
-	file_api_base_base_proto_rawDescOnce.Do(func() {
-		file_api_base_base_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_api_base_base_proto_rawDesc), len(file_api_base_base_proto_rawDesc)))
+func file_base_base_proto_rawDescGZIP() []byte {
+	file_base_base_proto_rawDescOnce.Do(func() {
+		file_base_base_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_base_base_proto_rawDesc), len(file_base_base_proto_rawDesc)))
 	})
-	return file_api_base_base_proto_rawDescData
+	return file_base_base_proto_rawDescData
 }
 
-var file_api_base_base_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_api_base_base_proto_goTypes = []any{
-	(*SortReq)(nil),    // 0: api.base.SortReq
-	(*PageReq)(nil),    // 1: api.base.PageReq
-	(*ResultResp)(nil), // 2: api.base.ResultResp
-	(*PageResp)(nil),   // 3: api.base.PageResp
+var file_base_base_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_base_base_proto_goTypes = []any{
+	(*SortReq)(nil),    // 0: base.SortReq
+	(*PageReq)(nil),    // 1: base.PageReq
+	(*ResultResp)(nil), // 2: base.ResultResp
+	(*PageResp)(nil),   // 3: base.PageResp
 }
-var file_api_base_base_proto_depIdxs = []int32{
+var file_base_base_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -267,26 +266,26 @@ var file_api_base_base_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_api_base_base_proto_init() }
-func file_api_base_base_proto_init() {
-	if File_api_base_base_proto != nil {
+func init() { file_base_base_proto_init() }
+func file_base_base_proto_init() {
+	if File_base_base_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_base_base_proto_rawDesc), len(file_api_base_base_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_base_base_proto_rawDesc), len(file_base_base_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_api_base_base_proto_goTypes,
-		DependencyIndexes: file_api_base_base_proto_depIdxs,
-		MessageInfos:      file_api_base_base_proto_msgTypes,
+		GoTypes:           file_base_base_proto_goTypes,
+		DependencyIndexes: file_base_base_proto_depIdxs,
+		MessageInfos:      file_base_base_proto_msgTypes,
 	}.Build()
-	File_api_base_base_proto = out.File
-	file_api_base_base_proto_goTypes = nil
-	file_api_base_base_proto_depIdxs = nil
+	File_base_base_proto = out.File
+	file_base_base_proto_goTypes = nil
+	file_base_base_proto_depIdxs = nil
 }

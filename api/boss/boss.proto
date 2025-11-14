@@ -1,0 +1,85 @@
+syntax = "proto3";
+
+package boss;
+
+import "google/api/annotations.proto";
+import "boss/user.proto";
+import "boss/role.proto";
+
+option go_package = "api/boss;boss";
+option java_multiple_files = true;
+option java_package = "boss";
+
+service User {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserReply){
+    option (google.api.http) = {
+      post: "/api/user",
+      body: "*"
+    };
+  };
+  rpc UpdateUser (UpdateUserRequest) returns (UpdateUserReply){
+    option (google.api.http) = {
+      put: "/api/user/:id",
+      body: "*"
+    };
+  };
+  rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply){
+    option (google.api.http) = {
+      delete: "/api/user/:id"
+    };
+  };
+  rpc GetUser (GetUserRequest) returns (GetUserReply){
+    option (google.api.http) = {
+      get: "/api/user/:id"
+    };
+  };
+  rpc ListUser (ListUserRequest) returns (ListUserReply){
+    option (google.api.http) = {
+      post: "/api/user/list",
+      body: "*"
+    };
+  };
+  rpc PageUser (PageUserRequest) returns (PageUserReply){
+    option (google.api.http) = {
+      post: "/api/user/page",
+      body: "*"
+    };
+  };
+}
+
+service Role {
+  rpc CreateRole (CreateRoleRequest) returns (CreateRoleReply){
+    option (google.api.http) = {
+      post: "/api/role",
+      body: "*"
+    };
+  };
+  rpc UpdateRole (UpdateRoleRequest) returns (UpdateRoleReply){
+    option (google.api.http) = {
+      put: "/api/role/:id",
+      body: "*"
+    };
+  };
+  rpc DeleteRole (DeleteRoleRequest) returns (DeleteRoleReply){
+    option (google.api.http) = {
+      delete: "/api/role/:id"
+    };
+  };
+  rpc GetRole (GetRoleRequest) returns (GetRoleReply){
+    option (google.api.http) = {
+      get: "/api/role/:id"
+    };
+  };
+  rpc ListRole (ListRoleRequest) returns (ListRoleReply){
+    option (google.api.http) = {
+      post: "/api/role/list",
+      body: "*"
+    };
+  };
+  rpc PageRole (PageRoleRequest) returns (PageRoleReply){
+    option (google.api.http) = {
+      post: "/api/role/page",
+      body: "*"
+    };
+  };
+}
