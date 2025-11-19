@@ -24,7 +24,7 @@ const (
 
 type UserReply struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Age           int32                  `protobuf:"varint,3,opt,name=age,proto3" json:"age,omitempty"`
 	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
@@ -62,11 +62,11 @@ func (*UserReply) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *UserReply) GetId() int64 {
+func (x *UserReply) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
 func (x *UserReply) GetName() string {
@@ -212,7 +212,7 @@ func (x *CreateUserReply) GetData() *UserReply {
 
 type UpdateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Age           int32                  `protobuf:"varint,3,opt,name=age,proto3" json:"age,omitempty"`
 	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
@@ -250,11 +250,11 @@ func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *UpdateUserRequest) GetId() int64 {
+func (x *UpdateUserRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
 func (x *UpdateUserRequest) GetName() string {
@@ -332,7 +332,7 @@ func (x *UpdateUserReply) GetData() *UserReply {
 
 type DeleteUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -367,11 +367,11 @@ func (*DeleteUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DeleteUserRequest) GetId() int64 {
+func (x *DeleteUserRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
 type DeleteUserReply struct {
@@ -420,7 +420,7 @@ func (x *DeleteUserReply) GetR() *base.ResultResp {
 
 type GetUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            int64                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -455,11 +455,11 @@ func (*GetUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetUserRequest) GetId() int64 {
+func (x *GetUserRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
-	return 0
+	return ""
 }
 
 type GetUserReply struct {
@@ -796,7 +796,7 @@ const file_boss_user_proto_rawDesc = "" +
 	"\n" +
 	"\x0fboss/user.proto\x12\x04boss\x1a\x0fbase/base.proto\"W\n" +
 	"\tUserReply\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
 	"\x03age\x18\x03 \x01(\x05R\x03age\x12\x14\n" +
 	"\x05email\x18\x04 \x01(\tR\x05email\"k\n" +
@@ -809,7 +809,7 @@ const file_boss_user_proto_rawDesc = "" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
 	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"_\n" +
 	"\x11UpdateUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x12\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
 	"\x03age\x18\x03 \x01(\x05R\x03age\x12\x14\n" +
 	"\x05email\x18\x04 \x01(\tR\x05email\"V\n" +
@@ -817,11 +817,11 @@ const file_boss_user_proto_rawDesc = "" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
 	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"#\n" +
 	"\x11DeleteUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"1\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"1\n" +
 	"\x0fDeleteUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\" \n" +
 	"\x0eGetUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"S\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"S\n" +
 	"\fGetUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
 	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"8\n" +

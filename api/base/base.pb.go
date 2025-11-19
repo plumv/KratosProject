@@ -24,7 +24,7 @@ const (
 type SortReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Order         string                 `protobuf:"bytes,1,opt,name=order,proto3" json:"order,omitempty"`
-	Sort          string                 `protobuf:"bytes,2,opt,name=sort,proto3" json:"sort,omitempty"`
+	Sort          bool                   `protobuf:"varint,2,opt,name=sort,proto3" json:"sort,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -66,11 +66,11 @@ func (x *SortReq) GetOrder() string {
 	return ""
 }
 
-func (x *SortReq) GetSort() string {
+func (x *SortReq) GetSort() bool {
 	if x != nil {
 		return x.Sort
 	}
-	return ""
+	return false
 }
 
 type PageReq struct {
@@ -228,7 +228,7 @@ const file_base_base_proto_rawDesc = "" +
 	"\x0fbase/base.proto\x12\x04base\"3\n" +
 	"\aSortReq\x12\x14\n" +
 	"\x05order\x18\x01 \x01(\tR\x05order\x12\x12\n" +
-	"\x04sort\x18\x02 \x01(\tR\x04sort\":\n" +
+	"\x04sort\x18\x02 \x01(\bR\x04sort\":\n" +
 	"\aPageReq\x12\x1b\n" +
 	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x05R\x04page\"2\n" +

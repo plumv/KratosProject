@@ -6,7 +6,7 @@ option go_package = "api/base;base";
 
 message SortReq{
   string order  = 1;
-  string sort  = 2;
+  bool sort  = 2;
 }
 
 message PageReq{
