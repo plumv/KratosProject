@@ -1,6 +1,7 @@
 package data
 
 import (
+	"boss/internal/biz"
 	"boss/internal/conf"
 	"boss/pkg/ent"
 	"boss/pkg/ent/hook"
@@ -22,12 +23,12 @@ import (
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewUserRepo, NewRoleRepo)
+var ProviderSet = wire.NewSet(NewData, NewTransaction, NewUserRepo, NewRoleRepo)
 
 // Data .
 type Data struct {
 	// TODO wrapped database client
-	db  *ent.Client
+	db  *ent.Database
 	rdb *redis.Client
 }
 
@@ -51,17 +52,17 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		span.End()
 	})
 	// 构建客户端
-	client := ent.NewClient(ent.Driver(sqlDrv))
+	db := ent.NewDatabase(ent.Driver(sqlDrv))
 	if err != nil {
 		log.Errorf("failed opening connection to sqlite: %v", err)
 		return nil, nil, err
 	}
 	// 添加软删除逻辑
-	client.Intercept(intercept.SoftDeleteInterceptor)
-	client.Use(hook.SoftDeleteHook)
+	db.Client.Intercept(intercept.SoftDeleteInterceptor)
+	db.Client.Use(hook.SoftDeleteHook)
 
 	// 创建表
-	if err := client.Schema.Create(
+	if err := db.Client.Schema.Create(
 		context.Background(),
 		migrate.WithGlobalUniqueID(true),
 		migrate.WithDropIndex(true),
@@ -83,7 +84,7 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 
 	// 构建
 	d := &Data{
-		db:  client,
+		db:  db,
 		rdb: rdb,
 	}
 	return d, func() {
@@ -92,4 +93,8 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 			log.Error(err)
 		}
 	}, nil
+}
+
+func NewTransaction(data *Data) biz.Transaction {
+	return data.db
 }

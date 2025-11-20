@@ -29,7 +29,8 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 		return nil, nil, err
 	}
 	userRepo := data.NewUserRepo(dataData, logger)
-	userUsecase := biz.NewUserUsecase(userRepo, logger)
+	transaction := data.NewTransaction(dataData)
+	userUsecase := biz.NewUserUsecase(userRepo, transaction, logger)
 	userService := service.NewUserService(userUsecase, logger)
 	roleRepo := data.NewRoleRepo(dataData, logger)
 	roleUsecase := biz.NewRoleUsecase(roleRepo, logger)

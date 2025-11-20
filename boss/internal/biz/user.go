@@ -42,26 +42,53 @@ type UserRepo interface {
 // UserUsecase is a User usecase.
 type UserUsecase struct {
 	repo UserRepo
+	tm   Transaction
 	log  *log.Helper
 }
 
 // NewUserUsecase new a User usecase.
-func NewUserUsecase(repo UserRepo, logger log.Logger) *UserUsecase {
-	return &UserUsecase{repo: repo, log: log.NewHelper(logger)}
+func NewUserUsecase(repo UserRepo, transaction Transaction, logger log.Logger) *UserUsecase {
+	return &UserUsecase{repo: repo, tm: transaction, log: log.NewHelper(logger)}
 }
 
 // CreateUser creates a User, and returns the new User.
-func (uc *UserUsecase) CreateUser(ctx context.Context, g *User) (uint64, error) {
-	return uc.repo.Save(ctx, g)
+func (uc *UserUsecase) CreateUser(ctx context.Context, u *User) (uint64, error) {
+	var (
+		err error
+		id  uint64
+	)
+	// 事务包装
+	err = uc.tm.InTx(ctx, func(ctx context.Context) error {
+		id, err = uc.repo.Save(ctx, u)
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+	return id, err
 }
-func (uc *UserUsecase) UpdateUser(ctx context.Context, id uint64, g *User) error {
-	return uc.repo.Update(ctx, id, g)
+func (uc *UserUsecase) UpdateUser(ctx context.Context, id uint64, u *User) error {
+	var (
+		err error
+	)
+	// 事务包装
+	err = uc.tm.InTx(ctx, func(ctx context.Context) error {
+		return uc.repo.Update(ctx, id, u)
+	})
+	return err
 }
 func (uc *UserUsecase) FindUser(ctx context.Context, id uint64) (*User, error) {
 	return uc.repo.FindByID(ctx, id)
 }
 func (uc *UserUsecase) DeleteUser(ctx context.Context, id uint64) error {
-	return uc.repo.DeleteByID(ctx, id)
+	var (
+		err error
+	)
+	// 事务包装
+	err = uc.tm.InTx(ctx, func(ctx context.Context) error {
+		return uc.repo.DeleteByID(ctx, id)
+	})
+	return err
 }
 
 func (uc *UserUsecase) ListUser(ctx context.Context, filter *UserFilter, order *[]*Order) ([]*User, error) {

@@ -27,7 +27,7 @@ func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
 }
 
 func (repo userRepo) Save(ctx context.Context, u *biz.User) (uint64, error) {
-	us, err := repo.data.db.User.Create().
+	us, err := repo.data.db.User(ctx).Create().
 		SetUsername(*u.Username).
 		SetPassword(*u.Password).
 		SetAge(*u.Age).Save(ctx)
@@ -38,7 +38,7 @@ func (repo userRepo) Save(ctx context.Context, u *biz.User) (uint64, error) {
 }
 
 func (repo userRepo) Update(ctx context.Context, id uint64, u *biz.User) error {
-	us, err := repo.data.db.User.UpdateOneID(id).
+	us, err := repo.data.db.User(ctx).UpdateOneID(id).
 		SetUsername(*u.Username).
 		SetPassword(*u.Password).
 		SetAge(*u.Age).Save(ctx)
@@ -61,7 +61,7 @@ func (repo userRepo) FindByID(ctx context.Context, id uint64) (*biz.User, error)
 			}, nil
 		}
 	}
-	us, err := repo.data.db.User.Get(ctx, id)
+	us, err := repo.data.db.User(ctx).Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}
@@ -78,11 +78,11 @@ func (repo userRepo) FindByID(ctx context.Context, id uint64) (*biz.User, error)
 
 func (repo userRepo) DeleteByID(ctx context.Context, id uint64) error {
 	_ = repo.data.rdb.Del(ctx, cacheKey(id)).Err()
-	return repo.data.db.User.DeleteOneID(id).Exec(ctx)
+	return repo.data.db.User(ctx).DeleteOneID(id).Exec(ctx)
 }
 
 func (repo userRepo) ListAll(ctx context.Context, f *biz.UserFilter, o *[]*biz.Order) ([]*biz.User, error) {
-	query := repo.data.db.User.Query()
+	query := repo.data.db.User(ctx).Query()
 	where(query, f)
 	order(query, o)
 	users, err := query.All(ctx)
@@ -101,7 +101,7 @@ func (repo userRepo) ListAll(ctx context.Context, f *biz.UserFilter, o *[]*biz.O
 }
 
 func (repo userRepo) PageAll(ctx context.Context, f *biz.UserFilter, p *biz.Page) ([]*biz.User, int, error) {
-	q := repo.data.db.User.Query()
+	q := repo.data.db.User(ctx).Query()
 	where(q, f)
 	order(q, p.Orders)
 	t, err := q.Count(ctx)
