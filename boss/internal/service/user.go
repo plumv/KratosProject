@@ -4,12 +4,13 @@ import (
 	"api/base"
 	"boss/internal/biz"
 	"context"
+	"fmt"
+	"strconv"
 	"strings"
 
 	pb "api/boss"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/uuid"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 )
 
@@ -46,15 +47,20 @@ func (s *UserService) CreateUser(ctx context.Context, req *pb.CreateUserRequest)
 	return &pb.CreateUserReply{
 		R: base.SUCCESS,
 		Data: &pb.UserReply{
-			Id:   wrapperspb.String(user.ID.String()),
+			Id:   wrapperspb.String(fmt.Sprint(id)),
 			Name: wrapperspb.String(*user.Username),
 			Age:  wrapperspb.Int32(*user.Age),
 		},
 	}, nil
 }
 func (s *UserService) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest) (*pb.UpdateUserReply, error) {
-	id := uuid.MustParse(req.Id.Value)
-	err := s.uc.UpdateUser(ctx, id, &biz.User{
+	id, err := strconv.ParseUint(req.Id.Value, 10, 64)
+	if err != nil {
+		return &pb.UpdateUserReply{
+			R: base.ERROR.FillMsg("参数ID错误"),
+		}, nil
+	}
+	err = s.uc.UpdateUser(ctx, id, &biz.User{
 		Username: &req.Name.Value,
 		Age:      &req.Age.Value,
 	})
@@ -72,14 +78,20 @@ func (s *UserService) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest)
 	return &pb.UpdateUserReply{
 		R: base.SUCCESS,
 		Data: &pb.UserReply{
-			Id:   wrapperspb.String(user.ID.String()),
+			Id:   wrapperspb.String(fmt.Sprint(id)),
 			Name: wrapperspb.String(*user.Username),
 			Age:  wrapperspb.Int32(*user.Age),
 		},
 	}, nil
 }
 func (s *UserService) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*pb.DeleteUserReply, error) {
-	err := s.uc.DeleteUser(ctx, uuid.MustParse(req.Id.Value))
+	id, err := strconv.ParseUint(req.Id.Value, 10, 64)
+	if err != nil {
+		return &pb.DeleteUserReply{
+			R: base.ERROR.FillMsg("参数ID错误"),
+		}, nil
+	}
+	err = s.uc.DeleteUser(ctx, id)
 	if err != nil {
 		return &pb.DeleteUserReply{
 			R: base.ERROR.FillMsg("删除失败"),
@@ -90,7 +102,13 @@ func (s *UserService) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest)
 	}, nil
 }
 func (s *UserService) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.GetUserReply, error) {
-	user, err := s.uc.FindUser(ctx, uuid.MustParse(req.Id.Value))
+	id, err := strconv.ParseUint(req.Id.Value, 10, 64)
+	if err != nil {
+		return &pb.GetUserReply{
+			R: base.ERROR.FillMsg("参数ID错误"),
+		}, nil
+	}
+	user, err := s.uc.FindUser(ctx, id)
 	if err != nil {
 		return &pb.GetUserReply{
 			R: base.ERROR.FillMsg("查询失败"),
@@ -99,7 +117,7 @@ func (s *UserService) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.
 	return &pb.GetUserReply{
 		R: base.SUCCESS,
 		Data: &pb.UserReply{
-			Id:   wrapperspb.String(user.ID.String()),
+			Id:   wrapperspb.String(fmt.Sprint(id)),
 			Name: wrapperspb.String(*user.Username),
 			Age:  wrapperspb.Int32(*user.Age),
 		},
@@ -137,7 +155,7 @@ func (s *UserService) ListUser(ctx context.Context, req *pb.ListUserRequest) (*p
 	var userReply = make([]*pb.UserReply, len(users))
 	for i, u := range users {
 		userReply[i] = &pb.UserReply{
-			Id:   wrapperspb.String(u.ID.String()),
+			Id:   wrapperspb.String(fmt.Sprint(u.ID)),
 			Name: wrapperspb.String(*u.Username),
 			Age:  wrapperspb.Int32(*u.Age),
 		}
@@ -184,7 +202,7 @@ func (s *UserService) PageUser(ctx context.Context, req *pb.PageUserRequest) (*p
 	var userReply = make([]*pb.UserReply, len(users))
 	for i, u := range users {
 		userReply[i] = &pb.UserReply{
-			Id:   wrapperspb.String(u.ID.String()),
+			Id:   wrapperspb.String(fmt.Sprint(u.ID)),
 			Name: wrapperspb.String(*u.Username),
 			Age:  wrapperspb.Int32(*u.Age),
 		}

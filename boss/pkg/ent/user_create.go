@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"boss/internal/data/ent/user"
+	"boss/pkg/ent/user"
 	"context"
 	"errors"
 	"fmt"
@@ -11,7 +11,6 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/google/uuid"
 )
 
 // UserCreate is the builder for creating a User entity.
@@ -21,28 +20,28 @@ type UserCreate struct {
 	hooks    []Hook
 }
 
-// SetIsDelete sets the "is_delete" field.
-func (_c *UserCreate) SetIsDelete(v bool) *UserCreate {
-	_c.mutation.SetIsDelete(v)
+// SetDeleteAt sets the "delete_at" field.
+func (_c *UserCreate) SetDeleteAt(v time.Time) *UserCreate {
+	_c.mutation.SetDeleteAt(v)
 	return _c
 }
 
-// SetNillableIsDelete sets the "is_delete" field if the given value is not nil.
-func (_c *UserCreate) SetNillableIsDelete(v *bool) *UserCreate {
+// SetNillableDeleteAt sets the "delete_at" field if the given value is not nil.
+func (_c *UserCreate) SetNillableDeleteAt(v *time.Time) *UserCreate {
 	if v != nil {
-		_c.SetIsDelete(*v)
+		_c.SetDeleteAt(*v)
 	}
 	return _c
 }
 
 // SetCreatedBy sets the "created_by" field.
-func (_c *UserCreate) SetCreatedBy(v uuid.UUID) *UserCreate {
+func (_c *UserCreate) SetCreatedBy(v uint64) *UserCreate {
 	_c.mutation.SetCreatedBy(v)
 	return _c
 }
 
 // SetNillableCreatedBy sets the "created_by" field if the given value is not nil.
-func (_c *UserCreate) SetNillableCreatedBy(v *uuid.UUID) *UserCreate {
+func (_c *UserCreate) SetNillableCreatedBy(v *uint64) *UserCreate {
 	if v != nil {
 		_c.SetCreatedBy(*v)
 	}
@@ -50,13 +49,13 @@ func (_c *UserCreate) SetNillableCreatedBy(v *uuid.UUID) *UserCreate {
 }
 
 // SetUpdatedBy sets the "updated_by" field.
-func (_c *UserCreate) SetUpdatedBy(v uuid.UUID) *UserCreate {
+func (_c *UserCreate) SetUpdatedBy(v uint64) *UserCreate {
 	_c.mutation.SetUpdatedBy(v)
 	return _c
 }
 
 // SetNillableUpdatedBy sets the "updated_by" field if the given value is not nil.
-func (_c *UserCreate) SetNillableUpdatedBy(v *uuid.UUID) *UserCreate {
+func (_c *UserCreate) SetNillableUpdatedBy(v *uint64) *UserCreate {
 	if v != nil {
 		_c.SetUpdatedBy(*v)
 	}
@@ -110,16 +109,8 @@ func (_c *UserCreate) SetAge(v int32) *UserCreate {
 }
 
 // SetID sets the "id" field.
-func (_c *UserCreate) SetID(v uuid.UUID) *UserCreate {
+func (_c *UserCreate) SetID(v uint64) *UserCreate {
 	_c.mutation.SetID(v)
-	return _c
-}
-
-// SetNillableID sets the "id" field if the given value is not nil.
-func (_c *UserCreate) SetNillableID(v *uuid.UUID) *UserCreate {
-	if v != nil {
-		_c.SetID(*v)
-	}
 	return _c
 }
 
@@ -158,10 +149,6 @@ func (_c *UserCreate) ExecX(ctx context.Context) {
 
 // defaults sets the default values of the builder before save.
 func (_c *UserCreate) defaults() {
-	if _, ok := _c.mutation.IsDelete(); !ok {
-		v := user.DefaultIsDelete
-		_c.mutation.SetIsDelete(v)
-	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := user.DefaultCreatedAt()
 		_c.mutation.SetCreatedAt(v)
@@ -170,17 +157,10 @@ func (_c *UserCreate) defaults() {
 		v := user.DefaultUpdatedAt()
 		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := _c.mutation.ID(); !ok {
-		v := user.DefaultID()
-		_c.mutation.SetID(v)
-	}
 }
 
 // check runs all checks and user-defined validators on the builder.
 func (_c *UserCreate) check() error {
-	if _, ok := _c.mutation.IsDelete(); !ok {
-		return &ValidationError{Name: "is_delete", err: errors.New(`ent: missing required field "User.is_delete"`)}
-	}
 	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "User.created_at"`)}
 	}
@@ -210,12 +190,9 @@ func (_c *UserCreate) sqlSave(ctx context.Context) (*User, error) {
 		}
 		return nil, err
 	}
-	if _spec.ID.Value != nil {
-		if id, ok := _spec.ID.Value.(*uuid.UUID); ok {
-			_node.ID = *id
-		} else if err := _node.ID.Scan(_spec.ID.Value); err != nil {
-			return nil, err
-		}
+	if _spec.ID.Value != _node.ID {
+		id := _spec.ID.Value.(int64)
+		_node.ID = uint64(id)
 	}
 	_c.mutation.id = &_node.ID
 	_c.mutation.done = true
@@ -225,22 +202,22 @@ func (_c *UserCreate) sqlSave(ctx context.Context) (*User, error) {
 func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 	var (
 		_node = &User{config: _c.config}
-		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUUID))
+		_spec = sqlgraph.NewCreateSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUint64))
 	)
 	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
-		_spec.ID.Value = &id
+		_spec.ID.Value = id
 	}
-	if value, ok := _c.mutation.IsDelete(); ok {
-		_spec.SetField(user.FieldIsDelete, field.TypeBool, value)
-		_node.IsDelete = value
+	if value, ok := _c.mutation.DeleteAt(); ok {
+		_spec.SetField(user.FieldDeleteAt, field.TypeTime, value)
+		_node.DeleteAt = &value
 	}
 	if value, ok := _c.mutation.CreatedBy(); ok {
-		_spec.SetField(user.FieldCreatedBy, field.TypeUUID, value)
+		_spec.SetField(user.FieldCreatedBy, field.TypeUint64, value)
 		_node.CreatedBy = value
 	}
 	if value, ok := _c.mutation.UpdatedBy(); ok {
-		_spec.SetField(user.FieldUpdatedBy, field.TypeUUID, value)
+		_spec.SetField(user.FieldUpdatedBy, field.TypeUint64, value)
 		_node.UpdatedBy = value
 	}
 	if value, ok := _c.mutation.CreatedAt(); ok {
@@ -311,6 +288,10 @@ func (_c *UserCreateBulk) Save(ctx context.Context) ([]*User, error) {
 					return nil, err
 				}
 				mutation.id = &nodes[i].ID
+				if specs[i].ID.Value != nil && nodes[i].ID == 0 {
+					id := specs[i].ID.Value.(int64)
+					nodes[i].ID = uint64(id)
+				}
 				mutation.done = true
 				return nodes[i], nil
 			})

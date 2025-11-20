@@ -3,14 +3,13 @@
 package ent
 
 import (
-	"boss/internal/data/ent/user"
+	"boss/pkg/ent/user"
 	"fmt"
 	"strings"
 	"time"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
-	"github.com/google/uuid"
 )
 
 // User is the model entity for the User schema.
@@ -18,13 +17,13 @@ type User struct {
 	config `json:"-"`
 	// ID of the ent.
 	// 主键
-	ID uuid.UUID `json:"id,omitempty"`
-	// 是否删除:false表示不删除
-	IsDelete bool `json:"is_delete,omitempty"`
+	ID uint64 `json:"id,omitempty"`
+	// 删除时间
+	DeleteAt *time.Time `json:"delete_at,omitempty"`
 	// 创建人
-	CreatedBy uuid.UUID `json:"created_by,omitempty"`
+	CreatedBy uint64 `json:"created_by,omitempty"`
 	// 更新人
-	UpdatedBy uuid.UUID `json:"updated_by,omitempty"`
+	UpdatedBy uint64 `json:"updated_by,omitempty"`
 	// 创建时间
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// 更新时间
@@ -43,16 +42,12 @@ func (*User) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case user.FieldIsDelete:
-			values[i] = new(sql.NullBool)
-		case user.FieldAge:
+		case user.FieldID, user.FieldCreatedBy, user.FieldUpdatedBy, user.FieldAge:
 			values[i] = new(sql.NullInt64)
 		case user.FieldUsername, user.FieldPassword:
 			values[i] = new(sql.NullString)
-		case user.FieldCreatedAt, user.FieldUpdatedAt:
+		case user.FieldDeleteAt, user.FieldCreatedAt, user.FieldUpdatedAt:
 			values[i] = new(sql.NullTime)
-		case user.FieldID, user.FieldCreatedBy, user.FieldUpdatedBy:
-			values[i] = new(uuid.UUID)
 		default:
 			values[i] = new(sql.UnknownType)
 		}
@@ -69,28 +64,29 @@ func (_m *User) assignValues(columns []string, values []any) error {
 	for i := range columns {
 		switch columns[i] {
 		case user.FieldID:
-			if value, ok := values[i].(*uuid.UUID); !ok {
-				return fmt.Errorf("unexpected type %T for field id", values[i])
-			} else if value != nil {
-				_m.ID = *value
+			value, ok := values[i].(*sql.NullInt64)
+			if !ok {
+				return fmt.Errorf("unexpected type %T for field id", value)
 			}
-		case user.FieldIsDelete:
-			if value, ok := values[i].(*sql.NullBool); !ok {
-				return fmt.Errorf("unexpected type %T for field is_delete", values[i])
+			_m.ID = uint64(value.Int64)
+		case user.FieldDeleteAt:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field delete_at", values[i])
 			} else if value.Valid {
-				_m.IsDelete = value.Bool
+				_m.DeleteAt = new(time.Time)
+				*_m.DeleteAt = value.Time
 			}
 		case user.FieldCreatedBy:
-			if value, ok := values[i].(*uuid.UUID); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field created_by", values[i])
-			} else if value != nil {
-				_m.CreatedBy = *value
+			} else if value.Valid {
+				_m.CreatedBy = uint64(value.Int64)
 			}
 		case user.FieldUpdatedBy:
-			if value, ok := values[i].(*uuid.UUID); !ok {
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_by", values[i])
-			} else if value != nil {
-				_m.UpdatedBy = *value
+			} else if value.Valid {
+				_m.UpdatedBy = uint64(value.Int64)
 			}
 		case user.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -158,8 +154,10 @@ func (_m *User) String() string {
 	var builder strings.Builder
 	builder.WriteString("User(")
 	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
-	builder.WriteString("is_delete=")
-	builder.WriteString(fmt.Sprintf("%v", _m.IsDelete))
+	if v := _m.DeleteAt; v != nil {
+		builder.WriteString("delete_at=")
+		builder.WriteString(v.Format(time.ANSIC))
+	}
 	builder.WriteString(", ")
 	builder.WriteString("created_by=")
 	builder.WriteString(fmt.Sprintf("%v", _m.CreatedBy))

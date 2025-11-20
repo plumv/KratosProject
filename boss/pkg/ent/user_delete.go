@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"boss/internal/data/ent/predicate"
-	"boss/internal/data/ent/user"
+	"boss/pkg/ent/predicate"
+	"boss/pkg/ent/user"
 	"context"
 
 	"entgo.io/ent/dialect/sql"
@@ -40,7 +40,7 @@ func (_d *UserDelete) ExecX(ctx context.Context) int {
 }
 
 func (_d *UserDelete) sqlExec(ctx context.Context) (int, error) {
-	_spec := sqlgraph.NewDeleteSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUUID))
+	_spec := sqlgraph.NewDeleteSpec(user.Table, sqlgraph.NewFieldSpec(user.FieldID, field.TypeUint64))
 	if ps := _d.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {

@@ -3,26 +3,20 @@
 package ent
 
 import (
-	"boss/internal/data/ent/user"
-	"ent/boss"
+	"boss/pkg/ent/schema"
+	"boss/pkg/ent/user"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
-	userMixin := boss.User{}.Mixin()
+	userMixin := schema.User{}.Mixin()
 	userMixinFields0 := userMixin[0].Fields()
 	_ = userMixinFields0
-	userFields := boss.User{}.Fields()
+	userFields := schema.User{}.Fields()
 	_ = userFields
-	// userDescIsDelete is the schema descriptor for is_delete field.
-	userDescIsDelete := userMixinFields0[1].Descriptor()
-	// user.DefaultIsDelete holds the default value on creation for the is_delete field.
-	user.DefaultIsDelete = userDescIsDelete.Default.(bool)
 	// userDescCreatedAt is the schema descriptor for created_at field.
 	userDescCreatedAt := userMixinFields0[4].Descriptor()
 	// user.DefaultCreatedAt holds the default value on creation for the created_at field.
@@ -33,8 +27,4 @@ func init() {
 	user.DefaultUpdatedAt = userDescUpdatedAt.Default.(func() time.Time)
 	// user.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
 	user.UpdateDefaultUpdatedAt = userDescUpdatedAt.UpdateDefault.(func() time.Time)
-	// userDescID is the schema descriptor for id field.
-	userDescID := userMixinFields0[0].Descriptor()
-	// user.DefaultID holds the default value on creation for the id field.
-	user.DefaultID = userDescID.Default.(func() uuid.UUID)
 }

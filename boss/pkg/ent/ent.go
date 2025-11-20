@@ -3,7 +3,7 @@
 package ent
 
 import (
-	"boss/internal/data/ent/user"
+	"boss/pkg/ent/user"
 	"context"
 	"errors"
 	"fmt"

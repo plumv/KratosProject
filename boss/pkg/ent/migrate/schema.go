@@ -11,10 +11,10 @@ import (
 var (
 	// BossUserColumns holds the columns for the "boss_user" table.
 	BossUserColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeUUID, Comment: "主键", SchemaType: map[string]string{"postgres": "uuid DEFAULT gen_random_uuid()"}},
-		{Name: "is_delete", Type: field.TypeBool, Comment: "是否删除:false表示不删除", Default: false},
-		{Name: "created_by", Type: field.TypeUUID, Nullable: true, Comment: "创建人"},
-		{Name: "updated_by", Type: field.TypeUUID, Nullable: true, Comment: "更新人"},
+		{Name: "id", Type: field.TypeUint64, Increment: true, Comment: "主键"},
+		{Name: "delete_at", Type: field.TypeTime, Nullable: true, Comment: "删除时间"},
+		{Name: "created_by", Type: field.TypeUint64, Nullable: true, Comment: "创建人"},
+		{Name: "updated_by", Type: field.TypeUint64, Nullable: true, Comment: "更新人"},
 		{Name: "created_at", Type: field.TypeTime, Comment: "创建时间"},
 		{Name: "updated_at", Type: field.TypeTime, Comment: "更新时间"},
 		{Name: "username", Type: field.TypeString, Comment: "用户名"},
@@ -28,7 +28,7 @@ var (
 		PrimaryKey: []*schema.Column{BossUserColumns[0]},
 		Indexes: []*schema.Index{
 			{
-				Name:    "user_is_delete",
+				Name:    "user_delete_at",
 				Unique:  false,
 				Columns: []*schema.Column{BossUserColumns[1]},
 			},

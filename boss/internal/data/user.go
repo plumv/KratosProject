@@ -2,15 +2,15 @@ package data
 
 import (
 	"boss/internal/biz"
-	"boss/internal/data/ent"
-	"boss/internal/data/ent/user"
+	"boss/pkg/ent"
+	"boss/pkg/ent/user"
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/uuid"
 )
 
 type userRepo struct {
@@ -26,37 +26,32 @@ func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
 	}
 }
 
-func (u userRepo) Save(ctx context.Context, user *biz.User) (uuid.UUID, error) {
-	us, err := u.data.db.User.Create().
-		SetUsername(*user.Username).
-		SetPassword(*user.Password).
-		SetAge(*user.Age).Save(ctx)
+func (repo userRepo) Save(ctx context.Context, u *biz.User) (uint64, error) {
+	us, err := repo.data.db.User.Create().
+		SetUsername(*u.Username).
+		SetPassword(*u.Password).
+		SetAge(*u.Age).Save(ctx)
 	if j, err := json.Marshal(us); err == nil {
-		_ = u.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
+		_ = repo.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
 	}
 	return us.ID, err
 }
 
-func (u userRepo) Update(ctx context.Context, id uuid.UUID, user *biz.User) error {
-	_, err := u.data.db.User.Get(ctx, id)
-	if err != nil {
-		return err
-	}
-	us, err := u.data.db.User.UpdateOneID(id).
-		SetUsername(*user.Username).
-		SetPassword(*user.Password).
-		SetAge(*user.Age).Save(ctx)
+func (repo userRepo) Update(ctx context.Context, id uint64, u *biz.User) error {
+	us, err := repo.data.db.User.UpdateOneID(id).
+		SetUsername(*u.Username).
+		SetPassword(*u.Password).
+		SetAge(*u.Age).Save(ctx)
 	if j, err := json.Marshal(us); err == nil {
-		_ = u.data.rdb.Set(ctx, cacheKey(id), j, time.Minute*5).Err()
+		_ = repo.data.rdb.Set(ctx, cacheKey(id), j, time.Minute*5).Err()
 	}
-
 	return err
 }
 
-func (u userRepo) FindByID(ctx context.Context, id uuid.UUID) (*biz.User, error) {
+func (repo userRepo) FindByID(ctx context.Context, id uint64) (*biz.User, error) {
 	// 1. 先读缓存
 	key := cacheKey(id)
-	if val, err := u.data.rdb.Get(ctx, key).Result(); err == nil {
+	if val, err := repo.data.rdb.Get(ctx, key).Result(); err == nil {
 		var us ent.User
 		if err := json.Unmarshal([]byte(val), &us); err == nil {
 			return &biz.User{
@@ -66,13 +61,13 @@ func (u userRepo) FindByID(ctx context.Context, id uuid.UUID) (*biz.User, error)
 			}, nil
 		}
 	}
-	us, err := u.data.db.User.Get(ctx, id)
+	us, err := repo.data.db.User.Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}
 	// 回填缓存
 	if j, err := json.Marshal(us); err == nil {
-		_ = u.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
+		_ = repo.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
 	}
 	return &biz.User{
 		ID:       &us.ID,
@@ -81,13 +76,13 @@ func (u userRepo) FindByID(ctx context.Context, id uuid.UUID) (*biz.User, error)
 	}, nil
 }
 
-func (u userRepo) DeleteByID(ctx context.Context, id uuid.UUID) error {
-	_ = u.data.rdb.Del(ctx, cacheKey(id)).Err()
-	return u.data.db.User.DeleteOneID(id).Exec(ctx)
+func (repo userRepo) DeleteByID(ctx context.Context, id uint64) error {
+	_ = repo.data.rdb.Del(ctx, cacheKey(id)).Err()
+	return repo.data.db.User.DeleteOneID(id).Exec(ctx)
 }
 
-func (u userRepo) ListAll(ctx context.Context, f *biz.UserFilter, o *[]*biz.Order) ([]*biz.User, error) {
-	query := u.data.db.User.Query()
+func (repo userRepo) ListAll(ctx context.Context, f *biz.UserFilter, o *[]*biz.Order) ([]*biz.User, error) {
+	query := repo.data.db.User.Query()
 	where(query, f)
 	order(query, o)
 	users, err := query.All(ctx)
@@ -105,8 +100,8 @@ func (u userRepo) ListAll(ctx context.Context, f *biz.UserFilter, o *[]*biz.Orde
 	return rv, nil
 }
 
-func (u userRepo) PageAll(ctx context.Context, f *biz.UserFilter, p *biz.Page) ([]*biz.User, int, error) {
-	q := u.data.db.User.Query()
+func (repo userRepo) PageAll(ctx context.Context, f *biz.UserFilter, p *biz.Page) ([]*biz.User, int, error) {
+	q := repo.data.db.User.Query()
 	where(q, f)
 	order(q, p.Orders)
 	t, err := q.Count(ctx)
@@ -175,6 +170,6 @@ func page(q *ent.UserQuery, p *biz.Page) {
 		Offset(int((*p.Page - 1) * *p.Limit))
 }
 
-func cacheKey(id uuid.UUID) string {
-	return "cache:boss:user:" + id.String()
+func cacheKey(id uint64) string {
+	return fmt.Sprintf("cache:boss:user:%v", id)
 }

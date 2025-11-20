@@ -2,7 +2,10 @@ package data
 
 import (
 	"boss/internal/conf"
-	"boss/internal/data/ent"
+	"boss/pkg/ent"
+	"boss/pkg/ent/hook"
+	"boss/pkg/ent/intercept"
+	"boss/pkg/ent/migrate"
 	"context"
 	"fmt"
 
@@ -53,8 +56,17 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		log.Errorf("failed opening connection to sqlite: %v", err)
 		return nil, nil, err
 	}
+	// 添加软删除逻辑
+	client.Intercept(intercept.SoftDeleteInterceptor)
+	client.Use(hook.SoftDeleteHook)
+
 	// 创建表
-	if err := client.Schema.Create(context.Background()); err != nil {
+	if err := client.Schema.Create(
+		context.Background(),
+		migrate.WithGlobalUniqueID(true),
+		migrate.WithDropIndex(true),
+		migrate.WithDropColumn(true),
+	); err != nil {
 		log.Errorf("failed creating schema resources: %v", err)
 		return nil, nil, err
 	}

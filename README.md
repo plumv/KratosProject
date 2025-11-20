@@ -788,7 +788,22 @@ go run entgo.io/ent/cmd/ent new User Role
 # 参考./ent/schema 生成到 ./boss/internal/data/ent
 go run entgo.io/ent/cmd/ent generate --target  ./boss/internal/data/ent ./ent/boss
 
+
+go run entgo.io/ent/cmd/ent generate --target  ./boss/internal/data/ent ./boss/internal/data/ent/schema
+
+go run entgo.io/ent/cmd/ent generate --target  ./internal/data/ent ./internal/data/ent/schema
+
+
+
+go run entgo.io/ent/cmd/ent generate --feature intercept,schema/snapshot --target  ./boss/internal/data/ent boss/internal/data/ent/schema
+
+
 go run entgo.io/ent/cmd/ent generate --target  ./ent/base ./ent/base/schema
+
+cd cd boss/internal/data/ent 
+
+
+
 
 ```
 

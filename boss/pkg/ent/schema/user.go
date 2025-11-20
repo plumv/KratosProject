@@ -1,8 +1,6 @@
-package boss
+package schema
 
 import (
-	"ent/base"
-
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/entsql"
 	"entgo.io/ent/schema"
@@ -17,7 +15,7 @@ type User struct {
 // Mixin 混入的公共字段
 func (User) Mixin() []ent.Mixin {
 	return []ent.Mixin{
-		base.Base{},
+		Base{},
 	}
 }
 

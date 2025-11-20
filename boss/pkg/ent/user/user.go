@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/google/uuid"
 )
 
 const (
@@ -14,8 +13,8 @@ const (
 	Label = "user"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldIsDelete holds the string denoting the is_delete field in the database.
-	FieldIsDelete = "is_delete"
+	// FieldDeleteAt holds the string denoting the delete_at field in the database.
+	FieldDeleteAt = "delete_at"
 	// FieldCreatedBy holds the string denoting the created_by field in the database.
 	FieldCreatedBy = "created_by"
 	// FieldUpdatedBy holds the string denoting the updated_by field in the database.
@@ -37,7 +36,7 @@ const (
 // Columns holds all SQL columns for user fields.
 var Columns = []string{
 	FieldID,
-	FieldIsDelete,
+	FieldDeleteAt,
 	FieldCreatedBy,
 	FieldUpdatedBy,
 	FieldCreatedAt,
@@ -58,16 +57,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
-	// DefaultIsDelete holds the default value on creation for the "is_delete" field.
-	DefaultIsDelete bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
 	DefaultUpdatedAt func() time.Time
 	// UpdateDefaultUpdatedAt holds the default value on update for the "updated_at" field.
 	UpdateDefaultUpdatedAt func() time.Time
-	// DefaultID holds the default value on creation for the "id" field.
-	DefaultID func() uuid.UUID
 )
 
 // OrderOption defines the ordering options for the User queries.
@@ -78,9 +73,9 @@ func ByID(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldID, opts...).ToFunc()
 }
 
-// ByIsDelete orders the results by the is_delete field.
-func ByIsDelete(opts ...sql.OrderTermOption) OrderOption {
-	return sql.OrderByField(FieldIsDelete, opts...).ToFunc()
+// ByDeleteAt orders the results by the delete_at field.
+func ByDeleteAt(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldDeleteAt, opts...).ToFunc()
 }
 
 // ByCreatedBy orders the results by the created_by field.

@@ -3,7 +3,7 @@
 package hook
 
 import (
-	"boss/internal/data/ent"
+	"boss/pkg/ent"
 	"context"
 	"fmt"
 )
