@@ -11,13 +11,13 @@ import (
 // User is a User model.
 type User struct {
 	// 主键
-	ID uuid.UUID
+	ID *uuid.UUID
 	// 用户名
-	Username string
+	Username *string
 	// 密码
-	Password string
+	Password *string
 	// 年龄
-	Age int32
+	Age *int32
 }
 
 // UserFilter 用户查询
@@ -26,7 +26,7 @@ type UserFilter struct {
 	AgeEQ        *int32  // 精确
 	AgeGTE       *int32  // 范围
 	AgeLTE       *int32
-	IDIn         []uuid.UUID // IN
+	IDIn         *[]uuid.UUID // IN
 	CreatedAfter *time.Time
 }
 

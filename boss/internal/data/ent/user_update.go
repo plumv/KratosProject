@@ -118,14 +118,14 @@ func (_u *UserUpdate) SetNillablePassword(v *string) *UserUpdate {
 }
 
 // SetAge sets the "age" field.
-func (_u *UserUpdate) SetAge(v int) *UserUpdate {
+func (_u *UserUpdate) SetAge(v int32) *UserUpdate {
 	_u.mutation.ResetAge()
 	_u.mutation.SetAge(v)
 	return _u
 }
 
 // SetNillableAge sets the "age" field if the given value is not nil.
-func (_u *UserUpdate) SetNillableAge(v *int) *UserUpdate {
+func (_u *UserUpdate) SetNillableAge(v *int32) *UserUpdate {
 	if v != nil {
 		_u.SetAge(*v)
 	}
@@ -133,7 +133,7 @@ func (_u *UserUpdate) SetNillableAge(v *int) *UserUpdate {
 }
 
 // AddAge adds value to the "age" field.
-func (_u *UserUpdate) AddAge(v int) *UserUpdate {
+func (_u *UserUpdate) AddAge(v int32) *UserUpdate {
 	_u.mutation.AddAge(v)
 	return _u
 }
@@ -213,10 +213,10 @@ func (_u *UserUpdate) sqlSave(ctx context.Context) (_node int, err error) {
 		_spec.SetField(user.FieldPassword, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Age(); ok {
-		_spec.SetField(user.FieldAge, field.TypeInt, value)
+		_spec.SetField(user.FieldAge, field.TypeInt32, value)
 	}
 	if value, ok := _u.mutation.AddedAge(); ok {
-		_spec.AddField(user.FieldAge, field.TypeInt, value)
+		_spec.AddField(user.FieldAge, field.TypeInt32, value)
 	}
 	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
@@ -327,14 +327,14 @@ func (_u *UserUpdateOne) SetNillablePassword(v *string) *UserUpdateOne {
 }
 
 // SetAge sets the "age" field.
-func (_u *UserUpdateOne) SetAge(v int) *UserUpdateOne {
+func (_u *UserUpdateOne) SetAge(v int32) *UserUpdateOne {
 	_u.mutation.ResetAge()
 	_u.mutation.SetAge(v)
 	return _u
 }
 
 // SetNillableAge sets the "age" field if the given value is not nil.
-func (_u *UserUpdateOne) SetNillableAge(v *int) *UserUpdateOne {
+func (_u *UserUpdateOne) SetNillableAge(v *int32) *UserUpdateOne {
 	if v != nil {
 		_u.SetAge(*v)
 	}
@@ -342,7 +342,7 @@ func (_u *UserUpdateOne) SetNillableAge(v *int) *UserUpdateOne {
 }
 
 // AddAge adds value to the "age" field.
-func (_u *UserUpdateOne) AddAge(v int) *UserUpdateOne {
+func (_u *UserUpdateOne) AddAge(v int32) *UserUpdateOne {
 	_u.mutation.AddAge(v)
 	return _u
 }
@@ -452,10 +452,10 @@ func (_u *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) {
 		_spec.SetField(user.FieldPassword, field.TypeString, value)
 	}
 	if value, ok := _u.mutation.Age(); ok {
-		_spec.SetField(user.FieldAge, field.TypeInt, value)
+		_spec.SetField(user.FieldAge, field.TypeInt32, value)
 	}
 	if value, ok := _u.mutation.AddedAge(); ok {
-		_spec.AddField(user.FieldAge, field.TypeInt, value)
+		_spec.AddField(user.FieldAge, field.TypeInt32, value)
 	}
 	_node = &User{config: _u.config}
 	_spec.Assign = _node.assignValues

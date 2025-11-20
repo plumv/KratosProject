@@ -26,9 +26,9 @@ func NewUserRepo(data *Data, logger log.Logger) biz.UserRepo {
 
 func (u userRepo) Save(ctx context.Context, user *biz.User) (uuid.UUID, error) {
 	us, err := u.data.db.User.Create().
-		SetUsername(user.Username).
-		SetPassword(user.Password).
-		SetAge(int(user.Age)).Save(ctx)
+		SetUsername(*user.Username).
+		SetPassword(*user.Password).
+		SetAge(*user.Age).Save(ctx)
 	return us.ID, err
 }
 
@@ -38,21 +38,21 @@ func (u userRepo) Update(ctx context.Context, id uuid.UUID, user *biz.User) erro
 		return err
 	}
 	_, err = u.data.db.User.UpdateOneID(id).
-		SetUsername(user.Username).
-		SetPassword(user.Password).
-		SetAge(int(user.Age)).Save(ctx)
+		SetUsername(*user.Username).
+		SetPassword(*user.Password).
+		SetAge(*user.Age).Save(ctx)
 	return err
 }
 
 func (u userRepo) FindByID(ctx context.Context, id uuid.UUID) (*biz.User, error) {
-	user, err := u.data.db.User.Get(ctx, id)
+	po, err := u.data.db.User.Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}
 	return &biz.User{
-		ID:       user.ID,
-		Username: user.Username,
-		Age:      int32(user.Age),
+		ID:       &po.ID,
+		Username: &po.Username,
+		Age:      &po.Age,
 	}, nil
 }
 
@@ -71,9 +71,9 @@ func (u userRepo) ListAll(ctx context.Context, f *biz.UserFilter, o *[]*biz.Orde
 	rv := make([]*biz.User, 0)
 	for _, p := range users {
 		rv = append(rv, &biz.User{
-			ID:       p.ID,
-			Username: p.Username,
-			Age:      int32(p.Age),
+			ID:       &p.ID,
+			Username: &p.Username,
+			Age:      &p.Age,
 		})
 	}
 	return rv, nil
@@ -95,9 +95,9 @@ func (u userRepo) PageAll(ctx context.Context, f *biz.UserFilter, p *biz.Page) (
 	rv := make([]*biz.User, 0)
 	for _, p := range users {
 		rv = append(rv, &biz.User{
-			ID:       p.ID,
-			Username: p.Username,
-			Age:      int32(p.Age),
+			ID:       &p.ID,
+			Username: &p.Username,
+			Age:      &p.Age,
 		})
 	}
 	return rv, t, nil
@@ -109,16 +109,16 @@ func where(u *ent.UserQuery, f *biz.UserFilter) {
 		u.Where(user.UsernameContains(*v))
 	}
 	if v := f.AgeEQ; v != nil {
-		u.Where(user.AgeEQ(int(*v)))
+		u.Where(user.AgeEQ(*v))
 	}
 	if v := f.AgeGTE; v != nil {
-		u.Where(user.AgeGTE(int(*v)))
+		u.Where(user.AgeGTE(*v))
 	}
 	if v := f.AgeLTE; v != nil {
-		u.Where(user.AgeLTE(int(*v)))
+		u.Where(user.AgeLTE(*v))
 	}
-	if len(f.IDIn) > 0 {
-		u.Where(user.IDIn(f.IDIn...))
+	if f.IDIn != nil && len(*f.IDIn) > 0 {
+		u.Where(user.IDIn(*f.IDIn...))
 	}
 	if v := f.CreatedAfter; v != nil {
 		u.Where(user.CreatedAtGTE(*v))
@@ -131,17 +131,17 @@ func order(u *ent.UserQuery, o *[]*biz.Order) {
 		return
 	}
 	for _, b := range *o {
-		if user.ValidColumn(b.Field) {
+		if user.ValidColumn(*b.Field) {
 			asc := sql.OrderAsc()
-			if b.Desc {
+			if *b.Desc {
 				asc = sql.OrderDesc()
 			}
-			u.Order(sql.OrderByField(b.Field, asc).ToFunc())
+			u.Order(sql.OrderByField(*b.Field, asc).ToFunc())
 		}
 	}
 }
 
 func page(q *ent.UserQuery, p *biz.Page) {
-	q.Limit(int(p.Limit)).
-		Offset(int((p.Page - 1) * p.Limit))
+	q.Limit(int(*p.Limit)).
+		Offset(int((*p.Page - 1) * *p.Limit))
 }

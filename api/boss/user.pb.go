@@ -10,6 +10,7 @@ import (
 	base "api/base"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -23,11 +24,11 @@ const (
 )
 
 type UserReply struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Age           int32                  `protobuf:"varint,3,opt,name=age,proto3" json:"age,omitempty"`
-	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Id            *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Age           *wrapperspb.Int32Value  `protobuf:"bytes,3,opt,name=age,proto3" json:"age,omitempty"`
+	Email         *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -62,40 +63,40 @@ func (*UserReply) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *UserReply) GetId() string {
+func (x *UserReply) GetId() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return nil
 }
 
-func (x *UserReply) GetName() string {
+func (x *UserReply) GetName() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Name
 	}
-	return ""
+	return nil
 }
 
-func (x *UserReply) GetAge() int32 {
+func (x *UserReply) GetAge() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Age
 	}
-	return 0
+	return nil
 }
 
-func (x *UserReply) GetEmail() string {
+func (x *UserReply) GetEmail() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Email
 	}
-	return ""
+	return nil
 }
 
 type CreateUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Age           int32                  `protobuf:"varint,2,opt,name=age,proto3" json:"age,omitempty"`
-	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Name          *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Age           *wrapperspb.Int32Value  `protobuf:"bytes,2,opt,name=age,proto3" json:"age,omitempty"`
+	Email         *wrapperspb.StringValue `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	Password      *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -130,32 +131,32 @@ func (*CreateUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateUserRequest) GetName() string {
+func (x *CreateUserRequest) GetName() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Name
 	}
-	return ""
+	return nil
 }
 
-func (x *CreateUserRequest) GetAge() int32 {
+func (x *CreateUserRequest) GetAge() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Age
 	}
-	return 0
+	return nil
 }
 
-func (x *CreateUserRequest) GetEmail() string {
+func (x *CreateUserRequest) GetEmail() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Email
 	}
-	return ""
+	return nil
 }
 
-func (x *CreateUserRequest) GetPassword() string {
+func (x *CreateUserRequest) GetPassword() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Password
 	}
-	return ""
+	return nil
 }
 
 type CreateUserReply struct {
@@ -211,11 +212,11 @@ func (x *CreateUserReply) GetData() *UserReply {
 }
 
 type UpdateUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Age           int32                  `protobuf:"varint,3,opt,name=age,proto3" json:"age,omitempty"`
-	Email         string                 `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Id            *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          *wrapperspb.StringValue `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Age           *wrapperspb.Int32Value  `protobuf:"bytes,3,opt,name=age,proto3" json:"age,omitempty"`
+	Email         *wrapperspb.StringValue `protobuf:"bytes,4,opt,name=email,proto3" json:"email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -250,32 +251,32 @@ func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *UpdateUserRequest) GetId() string {
+func (x *UpdateUserRequest) GetId() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return nil
 }
 
-func (x *UpdateUserRequest) GetName() string {
+func (x *UpdateUserRequest) GetName() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Name
 	}
-	return ""
+	return nil
 }
 
-func (x *UpdateUserRequest) GetAge() int32 {
+func (x *UpdateUserRequest) GetAge() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Age
 	}
-	return 0
+	return nil
 }
 
-func (x *UpdateUserRequest) GetEmail() string {
+func (x *UpdateUserRequest) GetEmail() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Email
 	}
-	return ""
+	return nil
 }
 
 type UpdateUserReply struct {
@@ -331,8 +332,8 @@ func (x *UpdateUserReply) GetData() *UserReply {
 }
 
 type DeleteUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Id            *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -367,11 +368,11 @@ func (*DeleteUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *DeleteUserRequest) GetId() string {
+func (x *DeleteUserRequest) GetId() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return nil
 }
 
 type DeleteUserReply struct {
@@ -419,8 +420,8 @@ func (x *DeleteUserReply) GetR() *base.ResultResp {
 }
 
 type GetUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Id            *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -455,11 +456,11 @@ func (*GetUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetUserRequest) GetId() string {
+func (x *GetUserRequest) GetId() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Id
 	}
-	return ""
+	return nil
 }
 
 type GetUserReply struct {
@@ -515,9 +516,9 @@ func (x *GetUserReply) GetData() *UserReply {
 }
 
 type QueryUserRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Age           int32                  `protobuf:"varint,2,opt,name=age,proto3" json:"age,omitempty"`
+	state         protoimpl.MessageState  `protogen:"open.v1"`
+	Name          *wrapperspb.StringValue `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Age           *wrapperspb.Int32Value  `protobuf:"bytes,2,opt,name=age,proto3" json:"age,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -552,18 +553,18 @@ func (*QueryUserRequest) Descriptor() ([]byte, []int) {
 	return file_boss_user_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *QueryUserRequest) GetName() string {
+func (x *QueryUserRequest) GetName() *wrapperspb.StringValue {
 	if x != nil {
 		return x.Name
 	}
-	return ""
+	return nil
 }
 
-func (x *QueryUserRequest) GetAge() int32 {
+func (x *QueryUserRequest) GetAge() *wrapperspb.Int32Value {
 	if x != nil {
 		return x.Age
 	}
-	return 0
+	return nil
 }
 
 type ListUserRequest struct {
@@ -794,40 +795,40 @@ var File_boss_user_proto protoreflect.FileDescriptor
 
 const file_boss_user_proto_rawDesc = "" +
 	"\n" +
-	"\x0fboss/user.proto\x12\x04boss\x1a\x0fbase/base.proto\"W\n" +
-	"\tUserReply\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
-	"\x03age\x18\x03 \x01(\x05R\x03age\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05email\"k\n" +
-	"\x11CreateUserRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x10\n" +
-	"\x03age\x18\x02 \x01(\x05R\x03age\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x04 \x01(\tR\bpassword\"V\n" +
+	"\x0fboss/user.proto\x12\x04boss\x1a\x0fbase/base.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xce\x01\n" +
+	"\tUserReply\x12,\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\x120\n" +
+	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
+	"\x03age\x18\x03 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\x122\n" +
+	"\x05email\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueR\x05email\"\xe2\x01\n" +
+	"\x11CreateUserRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
+	"\x03age\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\x122\n" +
+	"\x05email\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x05email\x128\n" +
+	"\bpassword\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueR\bpassword\"V\n" +
 	"\x0fCreateUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"_\n" +
-	"\x11UpdateUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12\x10\n" +
-	"\x03age\x18\x03 \x01(\x05R\x03age\x12\x14\n" +
-	"\x05email\x18\x04 \x01(\tR\x05email\"V\n" +
+	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"\xd6\x01\n" +
+	"\x11UpdateUserRequest\x12,\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\x120\n" +
+	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
+	"\x03age\x18\x03 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\x122\n" +
+	"\x05email\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueR\x05email\"V\n" +
 	"\x0fUpdateUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"#\n" +
-	"\x11DeleteUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"1\n" +
+	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"A\n" +
+	"\x11DeleteUserRequest\x12,\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\"1\n" +
 	"\x0fDeleteUserReply\x12\x1e\n" +
-	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\" \n" +
-	"\x0eGetUserRequest\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\"S\n" +
+	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\">\n" +
+	"\x0eGetUserRequest\x12,\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\"S\n" +
 	"\fGetUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"8\n" +
-	"\x10QueryUserRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x10\n" +
-	"\x03age\x18\x02 \x01(\x05R\x03age\"b\n" +
+	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"s\n" +
+	"\x10QueryUserRequest\x120\n" +
+	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
+	"\x03age\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\"b\n" +
 	"\x0fListUserRequest\x12!\n" +
 	"\x04sort\x18\x01 \x01(\v2\r.base.SortReqR\x04sort\x12,\n" +
 	"\x05query\x18\x02 \x01(\v2\x16.boss.QueryUserRequestR\x05query\"T\n" +
@@ -857,48 +858,66 @@ func file_boss_user_proto_rawDescGZIP() []byte {
 
 var file_boss_user_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_boss_user_proto_goTypes = []any{
-	(*UserReply)(nil),         // 0: boss.UserReply
-	(*CreateUserRequest)(nil), // 1: boss.CreateUserRequest
-	(*CreateUserReply)(nil),   // 2: boss.CreateUserReply
-	(*UpdateUserRequest)(nil), // 3: boss.UpdateUserRequest
-	(*UpdateUserReply)(nil),   // 4: boss.UpdateUserReply
-	(*DeleteUserRequest)(nil), // 5: boss.DeleteUserRequest
-	(*DeleteUserReply)(nil),   // 6: boss.DeleteUserReply
-	(*GetUserRequest)(nil),    // 7: boss.GetUserRequest
-	(*GetUserReply)(nil),      // 8: boss.GetUserReply
-	(*QueryUserRequest)(nil),  // 9: boss.QueryUserRequest
-	(*ListUserRequest)(nil),   // 10: boss.ListUserRequest
-	(*ListUserReply)(nil),     // 11: boss.ListUserReply
-	(*PageUserRequest)(nil),   // 12: boss.PageUserRequest
-	(*PageUserReply)(nil),     // 13: boss.PageUserReply
-	(*base.ResultResp)(nil),   // 14: base.ResultResp
-	(*base.SortReq)(nil),      // 15: base.SortReq
-	(*base.PageReq)(nil),      // 16: base.PageReq
-	(*base.PageResp)(nil),     // 17: base.PageResp
+	(*UserReply)(nil),              // 0: boss.UserReply
+	(*CreateUserRequest)(nil),      // 1: boss.CreateUserRequest
+	(*CreateUserReply)(nil),        // 2: boss.CreateUserReply
+	(*UpdateUserRequest)(nil),      // 3: boss.UpdateUserRequest
+	(*UpdateUserReply)(nil),        // 4: boss.UpdateUserReply
+	(*DeleteUserRequest)(nil),      // 5: boss.DeleteUserRequest
+	(*DeleteUserReply)(nil),        // 6: boss.DeleteUserReply
+	(*GetUserRequest)(nil),         // 7: boss.GetUserRequest
+	(*GetUserReply)(nil),           // 8: boss.GetUserReply
+	(*QueryUserRequest)(nil),       // 9: boss.QueryUserRequest
+	(*ListUserRequest)(nil),        // 10: boss.ListUserRequest
+	(*ListUserReply)(nil),          // 11: boss.ListUserReply
+	(*PageUserRequest)(nil),        // 12: boss.PageUserRequest
+	(*PageUserReply)(nil),          // 13: boss.PageUserReply
+	(*wrapperspb.StringValue)(nil), // 14: google.protobuf.StringValue
+	(*wrapperspb.Int32Value)(nil),  // 15: google.protobuf.Int32Value
+	(*base.ResultResp)(nil),        // 16: base.ResultResp
+	(*base.SortReq)(nil),           // 17: base.SortReq
+	(*base.PageReq)(nil),           // 18: base.PageReq
+	(*base.PageResp)(nil),          // 19: base.PageResp
 }
 var file_boss_user_proto_depIdxs = []int32{
-	14, // 0: boss.CreateUserReply.r:type_name -> base.ResultResp
-	0,  // 1: boss.CreateUserReply.data:type_name -> boss.UserReply
-	14, // 2: boss.UpdateUserReply.r:type_name -> base.ResultResp
-	0,  // 3: boss.UpdateUserReply.data:type_name -> boss.UserReply
-	14, // 4: boss.DeleteUserReply.r:type_name -> base.ResultResp
-	14, // 5: boss.GetUserReply.r:type_name -> base.ResultResp
-	0,  // 6: boss.GetUserReply.data:type_name -> boss.UserReply
-	15, // 7: boss.ListUserRequest.sort:type_name -> base.SortReq
-	9,  // 8: boss.ListUserRequest.query:type_name -> boss.QueryUserRequest
-	14, // 9: boss.ListUserReply.r:type_name -> base.ResultResp
-	0,  // 10: boss.ListUserReply.data:type_name -> boss.UserReply
-	16, // 11: boss.PageUserRequest.page:type_name -> base.PageReq
-	15, // 12: boss.PageUserRequest.sort:type_name -> base.SortReq
-	9,  // 13: boss.PageUserRequest.query:type_name -> boss.QueryUserRequest
-	14, // 14: boss.PageUserReply.r:type_name -> base.ResultResp
-	17, // 15: boss.PageUserReply.page:type_name -> base.PageResp
-	0,  // 16: boss.PageUserReply.data:type_name -> boss.UserReply
-	17, // [17:17] is the sub-list for method output_type
-	17, // [17:17] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	14, // 0: boss.UserReply.id:type_name -> google.protobuf.StringValue
+	14, // 1: boss.UserReply.name:type_name -> google.protobuf.StringValue
+	15, // 2: boss.UserReply.age:type_name -> google.protobuf.Int32Value
+	14, // 3: boss.UserReply.email:type_name -> google.protobuf.StringValue
+	14, // 4: boss.CreateUserRequest.name:type_name -> google.protobuf.StringValue
+	15, // 5: boss.CreateUserRequest.age:type_name -> google.protobuf.Int32Value
+	14, // 6: boss.CreateUserRequest.email:type_name -> google.protobuf.StringValue
+	14, // 7: boss.CreateUserRequest.password:type_name -> google.protobuf.StringValue
+	16, // 8: boss.CreateUserReply.r:type_name -> base.ResultResp
+	0,  // 9: boss.CreateUserReply.data:type_name -> boss.UserReply
+	14, // 10: boss.UpdateUserRequest.id:type_name -> google.protobuf.StringValue
+	14, // 11: boss.UpdateUserRequest.name:type_name -> google.protobuf.StringValue
+	15, // 12: boss.UpdateUserRequest.age:type_name -> google.protobuf.Int32Value
+	14, // 13: boss.UpdateUserRequest.email:type_name -> google.protobuf.StringValue
+	16, // 14: boss.UpdateUserReply.r:type_name -> base.ResultResp
+	0,  // 15: boss.UpdateUserReply.data:type_name -> boss.UserReply
+	14, // 16: boss.DeleteUserRequest.id:type_name -> google.protobuf.StringValue
+	16, // 17: boss.DeleteUserReply.r:type_name -> base.ResultResp
+	14, // 18: boss.GetUserRequest.id:type_name -> google.protobuf.StringValue
+	16, // 19: boss.GetUserReply.r:type_name -> base.ResultResp
+	0,  // 20: boss.GetUserReply.data:type_name -> boss.UserReply
+	14, // 21: boss.QueryUserRequest.name:type_name -> google.protobuf.StringValue
+	15, // 22: boss.QueryUserRequest.age:type_name -> google.protobuf.Int32Value
+	17, // 23: boss.ListUserRequest.sort:type_name -> base.SortReq
+	9,  // 24: boss.ListUserRequest.query:type_name -> boss.QueryUserRequest
+	16, // 25: boss.ListUserReply.r:type_name -> base.ResultResp
+	0,  // 26: boss.ListUserReply.data:type_name -> boss.UserReply
+	18, // 27: boss.PageUserRequest.page:type_name -> base.PageReq
+	17, // 28: boss.PageUserRequest.sort:type_name -> base.SortReq
+	9,  // 29: boss.PageUserRequest.query:type_name -> boss.QueryUserRequest
+	16, // 30: boss.PageUserReply.r:type_name -> base.ResultResp
+	19, // 31: boss.PageUserReply.page:type_name -> base.PageResp
+	0,  // 32: boss.PageUserReply.data:type_name -> boss.UserReply
+	33, // [33:33] is the sub-list for method output_type
+	33, // [33:33] is the sub-list for method input_type
+	33, // [33:33] is the sub-list for extension type_name
+	33, // [33:33] is the sub-list for extension extendee
+	0,  // [0:33] is the sub-list for field type_name
 }
 
 func init() { file_boss_user_proto_init() }

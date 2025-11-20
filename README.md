@@ -17,12 +17,12 @@ Go-Kratos学习项目
 │ ├── config // 配置信息
 │ ├── go.mod  // boss服务的mod文件
 │ └── internal // 该服务所有不对外暴露的代码
-│   ├── biz // 业务逻辑的组装层
+│   ├── biz // 业务逻辑的组装层 (缓存、多级过滤、权限校验、发事件、读写分离、聚合统计) (DO/Entity结构)
 │   ├── conf // 配置文件对应的结构体
-│   ├── data // 业务数据访问，包含 cache、db 等封装，实现了 biz 的 repo 接口。
+│   ├── data // 业务数据访问，包含 cache、db 等封装，实现了 biz 的 repo 接口。(对接PO结构)
 │      └── ent // 采用ent框架实现业务数据的ORM
 │   ├── server // http和grpc实例的创建和配置
-│   └── service // 实现了 api 定义的服务层
+│   └── service // 实现了 api 定义的服务层 (错误判断,DTO->DO)
 ├── third_party // api 依赖的第三方proto
 ├── go.mod // 整体项目的mod文件
 └── go.work // 整个工作空间的work文件
@@ -795,6 +795,14 @@ go run entgo.io/ent/cmd/ent generate --target  ./ent/base ./ent/base/schema
 
 
 #  截断
+
+ent框架适合项目从代码层面开发，不用直接从数据库层面开发。
+
+代码生成工作：
+
+    在api目录下定义proto，生成当前服务对外的一个DTO对象结构。
+    在ent目录下定义schema.go，生成当前服务对于数据的POJO对象结构。
+    在服务的biz目录下定义Entity业务对象结构，对上在service中承接DTO对象，对下在data中承接POJO对象。
 
 
 ```shell

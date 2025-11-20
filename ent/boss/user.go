@@ -34,6 +34,6 @@ func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("username").Comment("用户名"),
 		field.String("password").Comment("密码"),
-		field.Int("age").Comment("年龄"),
+		field.Int32("age").Comment("年龄"),
 	}
 }

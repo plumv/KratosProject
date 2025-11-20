@@ -34,7 +34,7 @@ type User struct {
 	// 密码
 	Password string `json:"password,omitempty"`
 	// 年龄
-	Age          int `json:"age,omitempty"`
+	Age          int32 `json:"age,omitempty"`
 	selectValues sql.SelectValues
 }
 
@@ -120,7 +120,7 @@ func (_m *User) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field age", values[i])
 			} else if value.Valid {
-				_m.Age = int(value.Int64)
+				_m.Age = int32(value.Int64)
 			}
 		default:
 			_m.selectValues.Set(columns[i], values[i])

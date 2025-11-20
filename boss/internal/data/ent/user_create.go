@@ -104,7 +104,7 @@ func (_c *UserCreate) SetPassword(v string) *UserCreate {
 }
 
 // SetAge sets the "age" field.
-func (_c *UserCreate) SetAge(v int) *UserCreate {
+func (_c *UserCreate) SetAge(v int32) *UserCreate {
 	_c.mutation.SetAge(v)
 	return _c
 }
@@ -260,7 +260,7 @@ func (_c *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 		_node.Password = value
 	}
 	if value, ok := _c.mutation.Age(); ok {
-		_spec.SetField(user.FieldAge, field.TypeInt, value)
+		_spec.SetField(user.FieldAge, field.TypeInt32, value)
 		_node.Age = value
 	}
 	return _node, _spec

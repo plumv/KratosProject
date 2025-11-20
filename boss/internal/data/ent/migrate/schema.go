@@ -19,7 +19,7 @@ var (
 		{Name: "updated_at", Type: field.TypeTime, Comment: "更新时间"},
 		{Name: "username", Type: field.TypeString, Comment: "用户名"},
 		{Name: "password", Type: field.TypeString, Comment: "密码"},
-		{Name: "age", Type: field.TypeInt, Comment: "年龄"},
+		{Name: "age", Type: field.TypeInt32, Comment: "年龄"},
 	}
 	// BossUserTable holds the schema information for the "boss_user" table.
 	BossUserTable = &schema.Table{
