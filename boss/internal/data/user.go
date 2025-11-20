@@ -5,6 +5,8 @@ import (
 	"boss/internal/data/ent"
 	"boss/internal/data/ent/user"
 	"context"
+	"encoding/json"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
@@ -29,6 +31,9 @@ func (u userRepo) Save(ctx context.Context, user *biz.User) (uuid.UUID, error) {
 		SetUsername(*user.Username).
 		SetPassword(*user.Password).
 		SetAge(*user.Age).Save(ctx)
+	if j, err := json.Marshal(us); err == nil {
+		_ = u.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
+	}
 	return us.ID, err
 }
 
@@ -37,26 +42,47 @@ func (u userRepo) Update(ctx context.Context, id uuid.UUID, user *biz.User) erro
 	if err != nil {
 		return err
 	}
-	_, err = u.data.db.User.UpdateOneID(id).
+	us, err := u.data.db.User.UpdateOneID(id).
 		SetUsername(*user.Username).
 		SetPassword(*user.Password).
 		SetAge(*user.Age).Save(ctx)
+	if j, err := json.Marshal(us); err == nil {
+		_ = u.data.rdb.Set(ctx, cacheKey(id), j, time.Minute*5).Err()
+	}
+
 	return err
 }
 
 func (u userRepo) FindByID(ctx context.Context, id uuid.UUID) (*biz.User, error) {
-	po, err := u.data.db.User.Get(ctx, id)
+	// 1. 先读缓存
+	key := cacheKey(id)
+	if val, err := u.data.rdb.Get(ctx, key).Result(); err == nil {
+		var us ent.User
+		if err := json.Unmarshal([]byte(val), &us); err == nil {
+			return &biz.User{
+				ID:       &us.ID,
+				Username: &us.Username,
+				Age:      &us.Age,
+			}, nil
+		}
+	}
+	us, err := u.data.db.User.Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}
+	// 回填缓存
+	if j, err := json.Marshal(us); err == nil {
+		_ = u.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
+	}
 	return &biz.User{
-		ID:       &po.ID,
-		Username: &po.Username,
-		Age:      &po.Age,
+		ID:       &us.ID,
+		Username: &us.Username,
+		Age:      &us.Age,
 	}, nil
 }
 
 func (u userRepo) DeleteByID(ctx context.Context, id uuid.UUID) error {
+	_ = u.data.rdb.Del(ctx, cacheKey(id)).Err()
 	return u.data.db.User.DeleteOneID(id).Exec(ctx)
 }
 
@@ -103,6 +129,7 @@ func (u userRepo) PageAll(ctx context.Context, f *biz.UserFilter, p *biz.Page) (
 	return rv, t, nil
 }
 
+// where 动态查询条件拼接
 func where(u *ent.UserQuery, f *biz.UserFilter) {
 	// ---------- 条件翻译 ----------
 	if v := f.Name; v != nil && *v != "" {
@@ -125,6 +152,7 @@ func where(u *ent.UserQuery, f *biz.UserFilter) {
 	}
 }
 
+// order 排序方式
 func order(u *ent.UserQuery, o *[]*biz.Order) {
 	if len(*o) == 0 {
 		u.Order(user.ByID(sql.OrderDesc()))
@@ -141,7 +169,12 @@ func order(u *ent.UserQuery, o *[]*biz.Order) {
 	}
 }
 
+// page 分页条件
 func page(q *ent.UserQuery, p *biz.Page) {
 	q.Limit(int(*p.Limit)).
 		Offset(int((*p.Page - 1) * *p.Limit))
+}
+
+func cacheKey(id uuid.UUID) string {
+	return "cache:boss:user:" + id.String()
 }

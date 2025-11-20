@@ -6,12 +6,13 @@ import (
 	"context"
 	"fmt"
 
-	_ "github.com/lib/pq"
-
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-redis/redis/extra/redisotel"
+	"github.com/go-redis/redis/v8"
 	"github.com/google/wire"
+	_ "github.com/lib/pq"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
@@ -23,7 +24,8 @@ var ProviderSet = wire.NewSet(NewData, NewUserRepo, NewRoleRepo)
 // Data .
 type Data struct {
 	// TODO wrapped database client
-	db *ent.Client
+	db  *ent.Client
+	rdb *redis.Client
 }
 
 // NewData .
@@ -56,9 +58,21 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		log.Errorf("failed creating schema resources: %v", err)
 		return nil, nil, err
 	}
+	// 构建redis客户端
+	rdb := redis.NewClient(&redis.Options{
+		Addr:         c.Redis.Addr,
+		Password:     c.Redis.Password,
+		DB:           int(c.Redis.Db),
+		DialTimeout:  c.Redis.DialTimeout.AsDuration(),
+		WriteTimeout: c.Redis.WriteTimeout.AsDuration(),
+		ReadTimeout:  c.Redis.ReadTimeout.AsDuration(),
+	})
+	rdb.AddHook(redisotel.TracingHook{})
+
 	// 构建
 	d := &Data{
-		db: client,
+		db:  client,
+		rdb: rdb,
 	}
 	return d, func() {
 		lh.Info("closing the data resources")
