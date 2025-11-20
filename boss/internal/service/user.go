@@ -4,7 +4,6 @@ import (
 	"api/base"
 	"boss/internal/biz"
 	"context"
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -47,7 +46,7 @@ func (s *UserService) CreateUser(ctx context.Context, req *pb.CreateUserRequest)
 	return &pb.CreateUserReply{
 		R: base.SUCCESS,
 		Data: &pb.UserReply{
-			Id:   wrapperspb.String(fmt.Sprint(id)),
+			Id:   wrapperspb.String(strconv.FormatUint(id, 10)),
 			Name: wrapperspb.String(*user.Username),
 			Age:  wrapperspb.Int32(*user.Age),
 		},
@@ -78,7 +77,7 @@ func (s *UserService) UpdateUser(ctx context.Context, req *pb.UpdateUserRequest)
 	return &pb.UpdateUserReply{
 		R: base.SUCCESS,
 		Data: &pb.UserReply{
-			Id:   wrapperspb.String(fmt.Sprint(id)),
+			Id:   wrapperspb.String(strconv.FormatUint(id, 10)),
 			Name: wrapperspb.String(*user.Username),
 			Age:  wrapperspb.Int32(*user.Age),
 		},
@@ -117,7 +116,7 @@ func (s *UserService) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.
 	return &pb.GetUserReply{
 		R: base.SUCCESS,
 		Data: &pb.UserReply{
-			Id:   wrapperspb.String(fmt.Sprint(id)),
+			Id:   wrapperspb.String(strconv.FormatUint(id, 10)),
 			Name: wrapperspb.String(*user.Username),
 			Age:  wrapperspb.Int32(*user.Age),
 		},
@@ -155,7 +154,7 @@ func (s *UserService) ListUser(ctx context.Context, req *pb.ListUserRequest) (*p
 	var userReply = make([]*pb.UserReply, len(users))
 	for i, u := range users {
 		userReply[i] = &pb.UserReply{
-			Id:   wrapperspb.String(fmt.Sprint(u.ID)),
+			Id:   wrapperspb.String(strconv.FormatUint(*u.ID, 10)),
 			Name: wrapperspb.String(*u.Username),
 			Age:  wrapperspb.Int32(*u.Age),
 		}
@@ -202,7 +201,7 @@ func (s *UserService) PageUser(ctx context.Context, req *pb.PageUserRequest) (*p
 	var userReply = make([]*pb.UserReply, len(users))
 	for i, u := range users {
 		userReply[i] = &pb.UserReply{
-			Id:   wrapperspb.String(fmt.Sprint(u.ID)),
+			Id:   wrapperspb.String(strconv.FormatUint(*u.ID, 10)),
 			Name: wrapperspb.String(*u.Username),
 			Age:  wrapperspb.Int32(*u.Age),
 		}
