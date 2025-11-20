@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 
+	_ "github.com/lib/pq"
+
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"github.com/go-kratos/kratos/v2/log"
