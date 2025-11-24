@@ -9,9 +9,9 @@ import (
 	"log"
 	"reflect"
 
-	"boss/pkg/ent/migrate"
+	"boss/internal/data/ent/migrate"
 
-	"boss/pkg/ent/user"
+	"boss/internal/data/ent/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"

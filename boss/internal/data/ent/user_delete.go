@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"boss/pkg/ent/predicate"
-	"boss/pkg/ent/user"
+	"boss/internal/data/ent/predicate"
+	"boss/internal/data/ent/user"
 	"context"
 
 	"entgo.io/ent/dialect/sql"

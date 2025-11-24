@@ -1,5 +1,5 @@
 package ent
 
-import _ "boss/pkg/ent/runtime"
+import _ "boss/internal/data/ent/runtime"
 
 //go:generate go run entc.go

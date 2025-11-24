@@ -3,7 +3,7 @@
 package user
 
 import (
-	"boss/pkg/ent/predicate"
+	"boss/internal/data/ent/predicate"
 	"time"
 
 	"entgo.io/ent/dialect/sql"

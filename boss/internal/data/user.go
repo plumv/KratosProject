@@ -2,8 +2,8 @@ package data
 
 import (
 	"boss/internal/biz"
-	"boss/pkg/ent"
-	"boss/pkg/ent/user"
+	"boss/internal/data/ent"
+	"boss/internal/data/ent/user"
 	"context"
 	"encoding/json"
 	"fmt"

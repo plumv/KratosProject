@@ -5,7 +5,7 @@ package privacy
 import (
 	"context"
 
-	"boss/pkg/ent"
+	"boss/internal/data/ent"
 
 	"entgo.io/ent/entql"
 	"entgo.io/ent/privacy"

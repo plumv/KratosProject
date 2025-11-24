@@ -5,11 +5,11 @@ package enttest
 import (
 	"context"
 
-	"boss/pkg/ent"
+	"boss/internal/data/ent"
 	// required by schema hooks.
-	_ "boss/pkg/ent/runtime"
+	_ "boss/internal/data/ent/runtime"
 
-	"boss/pkg/ent/migrate"
+	"boss/internal/data/ent/migrate"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

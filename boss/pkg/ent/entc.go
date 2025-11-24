@@ -18,6 +18,8 @@ func main() {
 			gen.FeatureSnapshot,
 			gen.FeatureIntercept,
 		},
+		Target:  "../../internal/data/ent",
+		Package: "boss/internal/data/ent",
 	}
 
 	if err := entc.Generate(schemaPath,
@@ -27,14 +29,4 @@ func main() {
 	); err != nil {
 		log.Fatalf("failed running third ent codegen with hooks and policy: %s", err)
 	}
-	//// 生成ent 骨架
-	//if err := entc.Generate(schemaPath, genConfig, entc.BuildTags("skiphooks", "skippolicy")); err != nil {
-	//	log.Fatalf("failed running first ent codegen: %s", err)
-	//}
-	//// 生成 hooks
-	//if err := entc.Generate(schemaPath, genConfig, entc.BuildTags("skippolicy")); err != nil {
-	//	log.Fatalf("failed running second ent codegen with hooks: %s", err)
-	//}
-	// 生成
-
 }

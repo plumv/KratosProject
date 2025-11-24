@@ -3,8 +3,8 @@
 package ent
 
 import (
+	"boss/internal/data/ent/user"
 	"boss/pkg/ent/schema"
-	"boss/pkg/ent/user"
 	"time"
 )
 

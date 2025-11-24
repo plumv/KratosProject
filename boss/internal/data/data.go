@@ -3,10 +3,11 @@ package data
 import (
 	"boss/internal/biz"
 	"boss/internal/conf"
-	"boss/pkg/ent"
-	"boss/pkg/ent/hook"
-	"boss/pkg/ent/intercept"
-	"boss/pkg/ent/migrate"
+	"boss/internal/data/ent"
+	"boss/internal/data/ent/hook"
+	"boss/internal/data/ent/intercept"
+	"boss/internal/data/ent/migrate"
+
 	"context"
 	"fmt"
 

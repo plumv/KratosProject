@@ -1,12 +1,11 @@
 package hook
 
 import (
-	ent2 "boss/pkg/ent"
+	"boss/internal/data/ent"
 	"context"
 	"fmt"
 	"time"
 
-	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 )
 
@@ -19,7 +18,7 @@ var SoftDeleteHook = On(
 			}
 			mx, ok := m.(interface {
 				SetOp(ent.Op)
-				Client() *ent2.Client
+				Client() *ent.Client
 				SetDeleteTime(time.Time)
 				WhereP(...func(*sql.Selector))
 			})

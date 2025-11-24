@@ -6,9 +6,9 @@ import (
 	"context"
 	"fmt"
 
-	"boss/pkg/ent"
-	"boss/pkg/ent/predicate"
-	"boss/pkg/ent/user"
+	"boss/internal/data/ent"
+	"boss/internal/data/ent/predicate"
+	"boss/internal/data/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 )
