@@ -5,7 +5,6 @@ import (
 	"boss/internal/data/ent"
 	"boss/internal/data/ent/user"
 	"context"
-	"encoding/json"
 	"fmt"
 	"time"
 
@@ -31,9 +30,7 @@ func (repo userRepo) Save(ctx context.Context, u *biz.User) (uint64, error) {
 		SetUsername(*u.Username).
 		SetPassword(*u.Password).
 		SetAge(*u.Age).Save(ctx)
-	if j, err := json.Marshal(us); err == nil {
-		_ = repo.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
-	}
+	repo.data.cdb.Add(ctx, cacheKey(us.ID), us, time.Minute*5)
 	return us.ID, err
 }
 
@@ -42,33 +39,27 @@ func (repo userRepo) Update(ctx context.Context, id uint64, u *biz.User) error {
 		SetUsername(*u.Username).
 		SetPassword(*u.Password).
 		SetAge(*u.Age).Save(ctx)
-	if j, err := json.Marshal(us); err == nil {
-		_ = repo.data.rdb.Set(ctx, cacheKey(id), j, time.Minute*5).Err()
-	}
+
+	repo.data.cdb.Update(ctx, cacheKey(id), us, time.Minute*5)
+
 	return err
 }
 
 func (repo userRepo) FindByID(ctx context.Context, id uint64) (*biz.User, error) {
-	// 1. 先读缓存
-	key := cacheKey(id)
-	if val, err := repo.data.rdb.Get(ctx, key).Result(); err == nil {
-		var us ent.User
-		if err := json.Unmarshal([]byte(val), &us); err == nil {
-			return &biz.User{
-				ID:       &us.ID,
-				Username: &us.Username,
-				Age:      &us.Age,
-			}, nil
-		}
+	us := new(ent.User)
+	err := repo.data.cdb.Get(ctx, cacheKey(id), us)
+	if err == nil {
+		return &biz.User{
+			ID:       &id,
+			Username: &us.Username,
+			Age:      &us.Age,
+		}, nil
 	}
-	us, err := repo.data.db.User(ctx).Get(ctx, id)
+	us, err = repo.data.db.User(ctx).Get(ctx, id)
 	if err != nil {
 		return nil, err
 	}
-	// 回填缓存
-	if j, err := json.Marshal(us); err == nil {
-		_ = repo.data.rdb.Set(ctx, cacheKey(us.ID), j, time.Minute*5).Err()
-	}
+	repo.data.cdb.Add(ctx, cacheKey(id), us, time.Minute*5)
 	return &biz.User{
 		ID:       &us.ID,
 		Username: &us.Username,
@@ -77,7 +68,7 @@ func (repo userRepo) FindByID(ctx context.Context, id uint64) (*biz.User, error)
 }
 
 func (repo userRepo) DeleteByID(ctx context.Context, id uint64) error {
-	_ = repo.data.rdb.Del(ctx, cacheKey(id)).Err()
+	repo.data.cdb.Delete(ctx, cacheKey(id))
 	return repo.data.db.User(ctx).DeleteOneID(id).Exec(ctx)
 }
 

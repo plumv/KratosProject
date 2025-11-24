@@ -6,6 +6,7 @@ import (
 	"boss/internal/data/ent/hook"
 	"boss/internal/data/ent/intercept"
 	"boss/internal/data/ent/migrate"
+	"boss/pkg/cache"
 	"boss/pkg/transaction"
 
 	"context"
@@ -30,7 +31,7 @@ var ProviderSet = wire.NewSet(NewData, NewTransaction, NewUserRepo, NewRoleRepo)
 type Data struct {
 	// TODO wrapped database client
 	db  *ent.Database
-	rdb *redis.Client
+	cdb *cache.Cache
 }
 
 // NewData .
@@ -82,11 +83,11 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		ReadTimeout:  c.Redis.ReadTimeout.AsDuration(),
 	})
 	rdb.AddHook(redisotel.TracingHook{})
-
+	cacheDatabase := cache.NewCache(rdb, logger)
 	// 构建
 	d := &Data{
 		db:  db,
-		rdb: rdb,
+		cdb: cacheDatabase,
 	}
 	return d, func() {
 		lh.Info("closing the data resources")
