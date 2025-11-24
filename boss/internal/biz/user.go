@@ -1,6 +1,7 @@
 package biz
 
 import (
+	"boss/pkg/transaction"
 	"context"
 	"time"
 
@@ -42,12 +43,12 @@ type UserRepo interface {
 // UserUsecase is a User usecase.
 type UserUsecase struct {
 	repo UserRepo
-	tm   Transaction
+	tm   transaction.Transaction
 	log  *log.Helper
 }
 
 // NewUserUsecase new a User usecase.
-func NewUserUsecase(repo UserRepo, transaction Transaction, logger log.Logger) *UserUsecase {
+func NewUserUsecase(repo UserRepo, transaction transaction.Transaction, logger log.Logger) *UserUsecase {
 	return &UserUsecase{repo: repo, tm: transaction, log: log.NewHelper(logger)}
 }
 

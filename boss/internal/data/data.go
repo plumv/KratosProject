@@ -1,12 +1,12 @@
 package data
 
 import (
-	"boss/internal/biz"
 	"boss/internal/conf"
 	"boss/internal/data/ent"
 	"boss/internal/data/ent/hook"
 	"boss/internal/data/ent/intercept"
 	"boss/internal/data/ent/migrate"
+	"boss/pkg/transaction"
 
 	"context"
 	"fmt"
@@ -96,6 +96,6 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 	}, nil
 }
 
-func NewTransaction(data *Data) biz.Transaction {
+func NewTransaction(data *Data) transaction.Transaction {
 	return data.db
 }
