@@ -3,6 +3,7 @@ syntax = "proto3";
 package boss;
 
 import "google/api/annotations.proto";
+import "openapi/v3/annotations.proto";
 import "boss/user.proto";
 import "boss/role.proto";
 
@@ -10,76 +11,144 @@ option go_package = "api/boss;boss";
 option java_multiple_files = true;
 option java_package = "boss";
 
+option (openapi.v3.document) = {
+  info: {
+    title: "boss examples";
+    version: "1.0";
+    contact: {
+      name: "gRPC-http project";
+      url: "https://127.0.0.1:8000/";
+      email: "none@example.com";
+    };
+    license: {
+      name: "BSD 3-Clause License";
+      url: "https://github.com/grpc-ecosystem/grpc-gateway/blob/master/LICENSE.txt";
+    };
+  };
+};
+
+
+
+
 service User {
   rpc CreateUser (CreateUserRequest) returns (CreateUserReply){
     option (google.api.http) = {
-      post: "/api/user",
-      body: "*"
+      post: "/api/user";
+      body: "*";
+    };
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      operation_id: "operation_id";
+      // summary 表示接口名称
+      summary: "创建用户";
+      // 表示接口描述
+      description: "传入用户基本信息创建用户";
     };
   };
   rpc UpdateUser (UpdateUserRequest) returns (UpdateUserReply){
     option (google.api.http) = {
-      put: "/api/user/:id",
-      body: "*"
+      put: "/api/user/:id";
+      body: "*";
+    };
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      // summary 表示接口名称
+      summary: "更新用户";
+      // 表示接口描述
+      description: "根据用户ID更新用户信息";
     };
   };
   rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply){
     option (google.api.http) = {
-      delete: "/api/user/:id"
+      delete: "/api/user/:id";
+    };
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      // summary 表示接口名称
+      summary: "删除用户";
+      // 表示接口描述
+      description: "根据用户ID删除用户";
     };
   };
   rpc GetUser (GetUserRequest) returns (GetUserReply){
     option (google.api.http) = {
-      get: "/api/user/:id"
+      get: "/api/user/:id";
+    };
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      // summary 表示接口名称
+      summary: "查找用户";
+      // 表示接口描述
+      description: "根据用户ID查询唯一用户";
     };
   };
   rpc ListUser (ListUserRequest) returns (ListUserReply){
     option (google.api.http) = {
-      post: "/api/user/list",
-      body: "*"
+      post: "/api/user/list";
+      body: "*";
+    };
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      // summary 表示接口名称
+      summary: "查询用户列表";
+      // 表示接口描述
+      description: "条件查询所有用户信息";
     };
   };
   rpc PageUser (PageUserRequest) returns (PageUserReply){
     option (google.api.http) = {
-      post: "/api/user/page",
-      body: "*"
+      post: "/api/user/page";
+      body: "*";
+    };
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      // summary 表示接口名称
+      summary: "分页查询用户";
+      // 表示接口描述
+      description: "条件查询所有用户信息并分页展示";
     };
   };
 }
 
-service Role {
-  rpc CreateRole (CreateRoleRequest) returns (CreateRoleReply){
-    option (google.api.http) = {
-      post: "/api/role",
-      body: "*"
-    };
-  };
-  rpc UpdateRole (UpdateRoleRequest) returns (UpdateRoleReply){
-    option (google.api.http) = {
-      put: "/api/role/:id",
-      body: "*"
-    };
-  };
-  rpc DeleteRole (DeleteRoleRequest) returns (DeleteRoleReply){
-    option (google.api.http) = {
-      delete: "/api/role/:id"
-    };
-  };
-  rpc GetRole (GetRoleRequest) returns (GetRoleReply){
-    option (google.api.http) = {
-      get: "/api/role/:id"
-    };
-  };
-  rpc ListRole (ListRoleRequest) returns (ListRoleReply){
-    option (google.api.http) = {
-      post: "/api/role/list",
-      body: "*"
-    };
-  };
-  rpc PageRole (PageRoleRequest) returns (PageRoleReply){
-    option (google.api.http) = {
-      post: "/api/role/page",
-      body: "*"
-    };
-  };
-}
+//service Role {
+//  rpc CreateRole (CreateRoleRequest) returns (CreateRoleReply){
+//    option (google.api.http) = {
+//      post: "/api/role",
+//      body: "*"
+//    };
+//  };
+//  rpc UpdateRole (UpdateRoleRequest) returns (UpdateRoleReply){
+//    option (google.api.http) = {
+//      put: "/api/role/:id",
+//      body: "*"
+//    };
+//  };
+//  rpc DeleteRole (DeleteRoleRequest) returns (DeleteRoleReply){
+//    option (google.api.http) = {
+//      delete: "/api/role/:id"
+//    };
+//  };
+//  rpc GetRole (GetRoleRequest) returns (GetRoleReply){
+//    option (google.api.http) = {
+//      get: "/api/role/:id"
+//    };
+//  };
+//  rpc ListRole (ListRoleRequest) returns (ListRoleReply){
+//    option (google.api.http) = {
+//      post: "/api/role/list",
+//      body: "*"
+//    };
+//  };
+//  rpc PageRole (PageRoleRequest) returns (PageRoleReply){
+//    option (google.api.http) = {
+//      post: "/api/role/page",
+//      body: "*"
+//    };
+//  };
+//}

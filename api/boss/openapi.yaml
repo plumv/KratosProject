@@ -3,159 +3,29 @@
 
 openapi: 3.0.3
 info:
-    title: ""
-    version: 0.0.1
+  title: boss examples
+  contact:
+    name: gRPC-http project
+    url: https://127.0.0.1:8000/
+    email: none@example.com
+  license:
+    name: BSD 3-Clause License
+    url: https://github.com/grpc-ecosystem/grpc-gateway/blob/master/LICENSE.txt
+  version: "1.0"
 paths:
-    /api/role:
-        post:
-            tags:
-                - Role
-            operationId: Role_CreateRole
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/CreateRoleRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/CreateRoleReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /api/role/:id:
-        get:
-            tags:
-                - Role
-            operationId: Role_GetRole
-            parameters:
-                - name: id
-                  in: query
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/GetRoleReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-        put:
-            tags:
-                - Role
-            operationId: Role_UpdateRole
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/UpdateRoleRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/UpdateRoleReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-        delete:
-            tags:
-                - Role
-            operationId: Role_DeleteRole
-            parameters:
-                - name: id
-                  in: query
-                  schema:
-                    type: string
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/DeleteRoleReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /api/role/list:
-        post:
-            tags:
-                - Role
-            operationId: Role_ListRole
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/ListRoleRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/ListRoleReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
-    /api/role/page:
-        post:
-            tags:
-                - Role
-            operationId: Role_PageRole
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: '#/components/schemas/PageRoleRequest'
-                required: true
-            responses:
-                "200":
-                    description: OK
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/PageRoleReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
     /api/user:
         post:
             tags:
                 - User
-            operationId: User_CreateUser
+                - 用户服务
+            summary: 创建用户
+            description: 传入用户基本信息创建用户
+            operationId: operation_id
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/CreateUserRequest'
+                          $ref: '#/components/schemas/boss.CreateUserRequest'
                 required: true
             responses:
                 "200":
@@ -163,17 +33,14 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/CreateUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+                              $ref: '#/components/schemas/boss.CreateUserReply'
     /api/user/:id:
         get:
             tags:
                 - User
+                - 用户服务
+            summary: 查找用户
+            description: 根据用户ID查询唯一用户
             operationId: User_GetUser
             parameters:
                 - name: id
@@ -186,22 +53,19 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+                              $ref: '#/components/schemas/boss.GetUserReply'
         put:
             tags:
                 - User
+                - 用户服务
+            summary: 更新用户
+            description: 根据用户ID更新用户信息
             operationId: User_UpdateUser
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/UpdateUserRequest'
+                          $ref: '#/components/schemas/boss.UpdateUserRequest'
                 required: true
             responses:
                 "200":
@@ -209,16 +73,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/UpdateUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+                              $ref: '#/components/schemas/boss.UpdateUserReply'
         delete:
             tags:
                 - User
+                - 用户服务
+            summary: 删除用户
+            description: 根据用户ID删除用户
             operationId: User_DeleteUser
             parameters:
                 - name: id
@@ -231,23 +92,20 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/DeleteUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+                              $ref: '#/components/schemas/boss.DeleteUserReply'
     /api/user/list:
         post:
             tags:
                 - User
+                - 用户服务
+            summary: 查询用户列表
+            description: 条件查询所有用户信息
             operationId: User_ListUser
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/ListUserRequest'
+                          $ref: '#/components/schemas/boss.ListUserRequest'
                 required: true
             responses:
                 "200":
@@ -255,23 +113,20 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/ListUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+                              $ref: '#/components/schemas/boss.ListUserReply'
     /api/user/page:
         post:
             tags:
                 - User
+                - 用户服务
+            summary: 分页查询用户
+            description: 条件查询所有用户信息并分页展示
             operationId: User_PageUser
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/PageUserRequest'
+                          $ref: '#/components/schemas/boss.PageUserRequest'
                 required: true
             responses:
                 "200":
@@ -279,269 +134,183 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PageUserReply'
-                default:
-                    description: Default error response
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/Status'
+                              $ref: '#/components/schemas/boss.PageUserReply'
 components:
     schemas:
-        CreateRoleReply:
+      base.PageReq:
+        title: 分页请求
+        type: object
+        properties:
+          pageSize:
+            title: 一页大小
+            type: integer
+            format: int32
+          page:
+            title: 页码
+            type: integer
+            format: int32
+      base.PageResp:
+        title: 分页响应
+            type: object
+            properties:
+              total:
+                title: 总数量
+                type: string
+      base.ResultResp:
+        title: 结果状态响应
+            type: object
+            properties:
+              code:
+                title: 响应状态
+                type: integer
+                format: int32
+              msg:
+                title: 状态信息
+                    type: string
+      base.SortReq:
+        title: 排序请求
+        type: object
+        properties:
+          order:
+            title: 排序字段
+                    type: string
+          sort:
+            title: 是否顺序排序
+            type: boolean
+      boss.CreateUserReply:
+        title: 创建用户响应信息
             type: object
             properties:
                 r:
-                    $ref: '#/components/schemas/ResultResp'
+                  $ref: '#/components/schemas/base.ResultResp'
                 data:
-                    $ref: '#/components/schemas/RoleReply'
-        CreateRoleRequest:
+                  $ref: '#/components/schemas/boss.UserReply'
+      boss.CreateUserRequest:
+        writeOnly: true
+        title: 用户创建请求
             type: object
             properties:
                 name:
-                    type: string
-                desc:
-                    type: string
-        CreateUserReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
-                data:
-                    $ref: '#/components/schemas/UserReply'
-        CreateUserRequest:
-            type: object
-            properties:
-                name:
+                  title: 用户名
                     type: string
                 age:
+                  title: 用户年龄
                     type: integer
                     format: int32
                 email:
+                  title: 用户邮箱
                     type: string
                 password:
+                  title: 用户密码
                     type: string
-        DeleteRoleReply:
+      boss.DeleteUserReply:
+        title: 用户删除响应
             type: object
             properties:
                 r:
-                    $ref: '#/components/schemas/ResultResp'
-        DeleteUserReply:
+                  $ref: '#/components/schemas/base.ResultResp'
+      boss.GetUserReply:
+        title: 获取用户响应
             type: object
             properties:
                 r:
-                    $ref: '#/components/schemas/ResultResp'
-        GetRoleReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
+                  $ref: '#/components/schemas/base.ResultResp'
                 data:
-                    $ref: '#/components/schemas/RoleReply'
-        GetUserReply:
+                  $ref: '#/components/schemas/boss.UserReply'
+      boss.ListUserReply:
+        title: 条件查询所有用户响应
             type: object
             properties:
                 r:
-                    $ref: '#/components/schemas/ResultResp'
+                  $ref: '#/components/schemas/base.ResultResp'
                 data:
-                    $ref: '#/components/schemas/UserReply'
-        GoogleProtobufAny:
-            type: object
-            properties:
-                '@type':
-                    type: string
-                    description: The type of the serialized message.
-            additionalProperties: true
-            description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
-        ListRoleReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
-                data:
+                  title: 用户列表
                     type: array
                     items:
-                        $ref: '#/components/schemas/RoleReply'
-        ListRoleRequest:
+                      $ref: '#/components/schemas/boss.UserReply'
+      boss.ListUserRequest:
+        title: 条件查询所有用户请求
             type: object
             properties:
                 sort:
-                    $ref: '#/components/schemas/SortReq'
+                  $ref: '#/components/schemas/base.SortReq'
                 query:
-                    $ref: '#/components/schemas/QueryRoleRequest'
-        ListUserReply:
+                  $ref: '#/components/schemas/boss.QueryUserRequest'
+      boss.PageUserReply:
+        title: 条件分页查询用户响应
             type: object
             properties:
                 r:
-                    $ref: '#/components/schemas/ResultResp'
+                  $ref: '#/components/schemas/base.ResultResp'
+                page:
+                  $ref: '#/components/schemas/base.PageResp'
                 data:
+                  title: 用户列表
                     type: array
                     items:
-                        $ref: '#/components/schemas/UserReply'
-        ListUserRequest:
+                      $ref: '#/components/schemas/boss.UserReply'
+      boss.PageUserRequest:
+        title: 条件分页查询用户响应
             type: object
             properties:
+                page:
+                  $ref: '#/components/schemas/base.PageReq'
                 sort:
-                    $ref: '#/components/schemas/SortReq'
+                  $ref: '#/components/schemas/base.SortReq'
                 query:
-                    $ref: '#/components/schemas/QueryUserRequest'
-        PageReq:
-            type: object
-            properties:
-                pageSize:
-                    type: integer
-                    format: int32
-                page:
-                    type: integer
-                    format: int32
-        PageResp:
-            type: object
-            properties:
-                total:
-                    type: string
-        PageRoleReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
-                page:
-                    $ref: '#/components/schemas/PageResp'
-                data:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/RoleReply'
-        PageRoleRequest:
-            type: object
-            properties:
-                page:
-                    $ref: '#/components/schemas/PageReq'
-                sort:
-                    $ref: '#/components/schemas/SortReq'
-                query:
-                    $ref: '#/components/schemas/QueryRoleRequest'
-        PageUserReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
-                page:
-                    $ref: '#/components/schemas/PageResp'
-                data:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/UserReply'
-        PageUserRequest:
-            type: object
-            properties:
-                page:
-                    $ref: '#/components/schemas/PageReq'
-                sort:
-                    $ref: '#/components/schemas/SortReq'
-                query:
-                    $ref: '#/components/schemas/QueryUserRequest'
-        QueryRoleRequest:
+                  $ref: '#/components/schemas/boss.QueryUserRequest'
+      boss.QueryUserRequest:
+        title: 用户查询条件请求
             type: object
             properties:
                 name:
+                  title: 用户名-模糊查询
                     type: string
                 age:
+                  title: 用户年龄
                     type: integer
                     format: int32
-        QueryUserRequest:
+      boss.UpdateUserReply:
+        title: 用户更新响应
             type: object
             properties:
-                name:
-                    type: string
-                age:
-                    type: integer
-                    format: int32
-        ResultResp:
-            type: object
-            properties:
-                code:
-                    type: integer
-                    format: int32
-                msg:
-                    type: string
-        RoleReply:
+                r:
+                  $ref: '#/components/schemas/base.ResultResp'
+                data:
+                  $ref: '#/components/schemas/boss.UserReply'
+      boss.UpdateUserRequest:
+        title: 更新用户请求
             type: object
             properties:
                 id:
+                  title: 主键
                     type: string
                 name:
-                    type: string
-                desc:
-                    type: string
-        SortReq:
-            type: object
-            properties:
-                order:
-                    type: string
-                sort:
-                    type: string
-        Status:
-            type: object
-            properties:
-                code:
-                    type: integer
-                    description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-                    format: int32
-                message:
-                    type: string
-                    description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
-                details:
-                    type: array
-                    items:
-                        $ref: '#/components/schemas/GoogleProtobufAny'
-                    description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
-            description: 'The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).'
-        UpdateRoleReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
-                data:
-                    $ref: '#/components/schemas/RoleReply'
-        UpdateRoleRequest:
-            type: object
-            properties:
-                id:
-                    type: string
-                name:
-                    type: string
-                desc:
-                    type: string
-        UpdateUserReply:
-            type: object
-            properties:
-                r:
-                    $ref: '#/components/schemas/ResultResp'
-                data:
-                    $ref: '#/components/schemas/UserReply'
-        UpdateUserRequest:
-            type: object
-            properties:
-                id:
-                    type: string
-                name:
+                  title: 用户名
                     type: string
                 age:
+                  title: 用户年龄
                     type: integer
                     format: int32
                 email:
+                  title: 用户邮箱
                     type: string
-        UserReply:
+      boss.UserReply:
+        title: 用户基本信息响应
             type: object
             properties:
                 id:
+                  title: 主键
                     type: string
                 name:
+                  title: 用户名
                     type: string
                 age:
+                  title: 用户年龄
                     type: integer
                     format: int32
                 email:
+                  title: 用户邮箱
                     type: string
 tags:
-    - name: Role
     - name: User

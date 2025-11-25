@@ -1,7 +1,6 @@
 package service
 
 import (
-	"boss/internal/biz"
 	"context"
 
 	pb "api/boss"
@@ -9,13 +8,10 @@ import (
 
 type RoleService struct {
 	pb.UnimplementedRoleServer
-	uc *biz.RoleUsecase
 }
 
-func NewRoleService(uc *biz.RoleUsecase) *RoleService {
-	return &RoleService{
-		uc: uc,
-	}
+func NewRoleService() *RoleService {
+	return &RoleService{}
 }
 
 func (s *RoleService) CreateRole(ctx context.Context, req *pb.CreateRoleRequest) (*pb.CreateRoleReply, error) {

@@ -3,76 +3,213 @@ syntax = "proto3";
 package boss;
 import "base/base.proto";
 import "google/protobuf/wrappers.proto";
+import "openapi/v3/annotations.proto";
 
 option go_package = "api/boss;boss";
 
 message UserReply{
-  google.protobuf.StringValue  id = 1;
-  google.protobuf.StringValue name = 2;
-  google.protobuf.Int32Value age = 3;
-  google.protobuf.StringValue email = 4;
+  option (openapi.v3.schema) = {
+    title: "用户基本信息响应";
+  };
+  google.protobuf.StringValue  id = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "主键";
+    }
+  ];
+  google.protobuf.StringValue name = 2 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户名";
+    }
+  ];
+  google.protobuf.Int32Value age = 3 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户年龄";
+    }
+  ];
+  google.protobuf.StringValue email = 4 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户邮箱";
+    }
+  ];
 }
 
 message CreateUserRequest {
-  google.protobuf.StringValue name = 1;
-  google.protobuf.Int32Value age = 2;
-  google.protobuf.StringValue email = 3;
-  google.protobuf.StringValue password = 4;
+  option (openapi.v3.schema) = {
+    nullable: false;
+    read_only: false;
+    write_only: true;
+    title: "用户创建请求";
+  };
+  google.protobuf.StringValue name = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户名";
+    }
+  ];
+  google.protobuf.Int32Value age = 2 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户年龄";
+    }
+  ];
+  google.protobuf.StringValue email = 3 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户邮箱";
+    }
+  ];
+  google.protobuf.StringValue password = 4 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户密码";
+    }
+  ];
 }
+
 message CreateUserReply {
-  base.ResultResp r = 1;
-  UserReply data = 2;
+  option (openapi.v3.schema) = {
+    title: "创建用户响应信息";
+  };
+  base.ResultResp r = 1 ;
+  UserReply data = 2 ;
 }
 
 message UpdateUserRequest {
-  google.protobuf.StringValue  id = 1;
-  google.protobuf.StringValue name = 2;
-  google.protobuf.Int32Value age = 3;
-  google.protobuf.StringValue email = 4;
+  option (openapi.v3.schema) = {
+    title: "更新用户请求";
+  };
+  google.protobuf.StringValue  id = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "主键";
+    }
+  ];
+  google.protobuf.StringValue name = 2 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户名";
+    }
+  ];
+  google.protobuf.Int32Value age = 3 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户年龄";
+    }
+  ];
+  google.protobuf.StringValue email = 4 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户邮箱";
+    }
+  ];
 }
 message UpdateUserReply {
+  option (openapi.v3.schema) = {
+    title: "用户更新响应";
+  };
   base.ResultResp r = 1;
   UserReply data = 2;
 }
 
 message DeleteUserRequest {
-  google.protobuf.StringValue  id = 1;
+  option (openapi.v3.schema) = {
+    title: "用户删除请求";
+  };
+  google.protobuf.StringValue  id = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "主键";
+    }
+  ];
 }
 message DeleteUserReply {
+  option (openapi.v3.schema) = {
+    title: "用户删除响应";
+  };
   base.ResultResp r = 1;
 }
 
 message GetUserRequest {
-  google.protobuf.StringValue  id = 1;
+  option (openapi.v3.schema) = {
+    title: "获取用户请求";
+  };
+  google.protobuf.StringValue  id = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "主键";
+    }
+  ];
 
 }
 message GetUserReply {
+  option (openapi.v3.schema) = {
+    title: "获取用户响应";
+  };
   base.ResultResp r = 1;
   UserReply data = 2;
 }
 
 message QueryUserRequest{
-  google.protobuf.StringValue name = 1;
-  google.protobuf.Int32Value age = 2;
+  option (openapi.v3.schema) = {
+    title: "用户查询条件请求";
+  };
+  google.protobuf.StringValue name = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户名-模糊查询";
+    }
+  ];
+  google.protobuf.Int32Value age = 2 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户年龄";
+    }
+  ];
 }
 
 message ListUserRequest {
+  option (openapi.v3.schema) = {
+    title: "条件查询所有用户请求";
+  };
   base.SortReq sort = 1;
   QueryUserRequest query = 2;
 }
 message ListUserReply {
+  option (openapi.v3.schema) = {
+    title: "条件查询所有用户响应";
+  };
   base.ResultResp r = 1;
-  repeated UserReply data = 2;
+  repeated UserReply data = 2 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户列表";
+    }
+  ];
 }
 
 message PageUserRequest {
+  option (openapi.v3.schema) = {
+    title: "条件分页查询用户响应";
+  };
   base.PageReq page = 1;
   base.SortReq sort = 2;
   QueryUserRequest query = 3;
 }
 
 message PageUserReply{
+  option (openapi.v3.schema) = {
+    title: "条件分页查询用户响应";
+  };
   base.ResultResp r = 1;
   base.PageResp page = 2;
-  repeated UserReply data = 3;
+  repeated UserReply data = 3 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户列表";
+    }
+  ];
 }

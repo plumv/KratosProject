@@ -366,6 +366,15 @@ service Role {
 }
 ```
 
+### 生成boss服务的swagger文档
+
+```shell
+# 安装命令工具
+ go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+# 执行生成命令
+ protoc --proto_path=./ --proto_path=./third_party --openapi_out=fq_schema_naming=true,default_response=false:./boss boss/boss.proto
+```
+
 ## 创建boss服务
 
 ### 生成项目框架
