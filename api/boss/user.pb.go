@@ -8,6 +8,8 @@ package boss
 
 import (
 	base "api/base"
+	_ "buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
+	_ "github.com/google/gnostic/openapiv3"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	wrapperspb "google.golang.org/protobuf/types/known/wrapperspb"
@@ -795,54 +797,55 @@ var File_boss_user_proto protoreflect.FileDescriptor
 
 const file_boss_user_proto_rawDesc = "" +
 	"\n" +
-	"\x0fboss/user.proto\x12\x04boss\x1a\x0fbase/base.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\xce\x01\n" +
-	"\tUserReply\x12,\n" +
-	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\x120\n" +
-	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
-	"\x03age\x18\x03 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\x122\n" +
-	"\x05email\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueR\x05email\"\xe2\x01\n" +
-	"\x11CreateUserRequest\x120\n" +
-	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
-	"\x03age\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\x122\n" +
-	"\x05email\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x05email\x128\n" +
-	"\bpassword\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueR\bpassword\"V\n" +
+	"\x0fboss/user.proto\x12\x04boss\x1a\x0fbase/base.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1copenapi/v3/annotations.proto\x1a\x1bbuf/validate/validate.proto\"\xb0\x02\n" +
+	"\tUserReply\x129\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\v\xbaG\bJ\x06主键R\x02id\x12@\n" +
+	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueB\x0e\xbaG\vJ\t用户名R\x04name\x12@\n" +
+	"\x03age\x18\x03 \x01(\v2\x1b.google.protobuf.Int32ValueB\x11\xbaG\x0eJ\f用户年龄R\x03age\x12E\n" +
+	"\x05email\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueB\x11\xbaG\x0eJ\f用户邮箱R\x05email:\x1d\xbaG\x1aJ\x18用户基本信息响应\"\xe9\x02\n" +
+	"\x11CreateUserRequest\x12F\n" +
+	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\x14\xbaG\vJ\t用户名\xbaH\x03\xc8\x01\x01R\x04name\x12M\n" +
+	"\x03age\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueB\x1e\xbaG\x0eJ\f用户年龄\xbaH\n" +
+	"\xc8\x01\x01\x1a\x05\x18\xc8\x01(\x00R\x03age\x12O\n" +
+	"\x05email\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueB\x1b\xbaG\x0eJ\f用户邮箱\xbaH\a\xc8\x01\x01r\x02`\x01R\x05email\x12Q\n" +
+	"\bpassword\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueB\x17\xbaG\x0eJ\f用户密码\xbaH\x03\xc8\x01\x01R\bpassword:\x19\xbaG\x16 \x01J\x12用户创建请求\"u\n" +
 	"\x0fCreateUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"\xd6\x01\n" +
-	"\x11UpdateUserRequest\x12,\n" +
-	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\x120\n" +
-	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
-	"\x03age\x18\x03 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\x122\n" +
-	"\x05email\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueR\x05email\"V\n" +
+	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data:\x1d\xbaG\x1aJ\x18创建用户响应信息\"\xb2\x02\n" +
+	"\x11UpdateUserRequest\x129\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\v\xbaG\bJ\x06主键R\x02id\x12@\n" +
+	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueB\x0e\xbaG\vJ\t用户名R\x04name\x12@\n" +
+	"\x03age\x18\x03 \x01(\v2\x1b.google.protobuf.Int32ValueB\x11\xbaG\x0eJ\f用户年龄R\x03age\x12E\n" +
+	"\x05email\x18\x04 \x01(\v2\x1c.google.protobuf.StringValueB\x11\xbaG\x0eJ\f用户邮箱R\x05email:\x17\xbaG\x14J\x12更新用户请求\"o\n" +
 	"\x0fUpdateUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"A\n" +
-	"\x11DeleteUserRequest\x12,\n" +
-	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\"1\n" +
+	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data:\x17\xbaG\x14J\x12用户更新响应\"g\n" +
+	"\x11DeleteUserRequest\x129\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\v\xbaG\bJ\x06主键R\x02id:\x17\xbaG\x14J\x12用户删除请求\"J\n" +
 	"\x0fDeleteUserReply\x12\x1e\n" +
-	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\">\n" +
-	"\x0eGetUserRequest\x12,\n" +
-	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x02id\"S\n" +
+	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r:\x17\xbaG\x14J\x12用户删除响应\"d\n" +
+	"\x0eGetUserRequest\x129\n" +
+	"\x02id\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\v\xbaG\bJ\x06主键R\x02id:\x17\xbaG\x14J\x12获取用户请求\"l\n" +
 	"\fGetUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data\"s\n" +
-	"\x10QueryUserRequest\x120\n" +
-	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x12-\n" +
-	"\x03age\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueR\x03age\"b\n" +
+	"\x04data\x18\x02 \x01(\v2\x0f.boss.UserReplyR\x04data:\x17\xbaG\x14J\x12获取用户响应\"\xc2\x01\n" +
+	"\x10QueryUserRequest\x12M\n" +
+	"\x04name\x18\x01 \x01(\v2\x1c.google.protobuf.StringValueB\x1b\xbaG\x18J\x16用户名-模糊查询R\x04name\x12@\n" +
+	"\x03age\x18\x02 \x01(\v2\x1b.google.protobuf.Int32ValueB\x11\xbaG\x0eJ\f用户年龄R\x03age:\x1d\xbaG\x1aJ\x18用户查询条件请求\"\x87\x01\n" +
 	"\x0fListUserRequest\x12!\n" +
 	"\x04sort\x18\x01 \x01(\v2\r.base.SortReqR\x04sort\x12,\n" +
-	"\x05query\x18\x02 \x01(\v2\x16.boss.QueryUserRequestR\x05query\"T\n" +
+	"\x05query\x18\x02 \x01(\v2\x16.boss.QueryUserRequestR\x05query:#\xbaG J\x1e条件查询所有用户请求\"\x8c\x01\n" +
 	"\rListUserReply\x12\x1e\n" +
-	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12#\n" +
-	"\x04data\x18\x02 \x03(\v2\x0f.boss.UserReplyR\x04data\"\x85\x01\n" +
+	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x126\n" +
+	"\x04data\x18\x02 \x03(\v2\x0f.boss.UserReplyB\x11\xbaG\x0eJ\f用户列表R\x04data:#\xbaG J\x1e条件查询所有用户响应\"\xaa\x01\n" +
 	"\x0fPageUserRequest\x12!\n" +
 	"\x04page\x18\x01 \x01(\v2\r.base.PageReqR\x04page\x12!\n" +
 	"\x04sort\x18\x02 \x01(\v2\r.base.SortReqR\x04sort\x12,\n" +
-	"\x05query\x18\x03 \x01(\v2\x16.boss.QueryUserRequestR\x05query\"x\n" +
+	"\x05query\x18\x03 \x01(\v2\x16.boss.QueryUserRequestR\x05query:#\xbaG J\x1e条件分页查询用户响应\"\xb0\x01\n" +
 	"\rPageUserReply\x12\x1e\n" +
 	"\x01r\x18\x01 \x01(\v2\x10.base.ResultRespR\x01r\x12\"\n" +
-	"\x04page\x18\x02 \x01(\v2\x0e.base.PageRespR\x04page\x12#\n" +
-	"\x04data\x18\x03 \x03(\v2\x0f.boss.UserReplyR\x04dataB\x0fZ\rapi/boss;bossb\x06proto3"
+	"\x04page\x18\x02 \x01(\v2\x0e.base.PageRespR\x04page\x126\n" +
+	"\x04data\x18\x03 \x03(\v2\x0f.boss.UserReplyB\x11\xbaG\x0eJ\f用户列表R\x04data:#\xbaG J\x1e条件分页查询用户响应B\x0fZ\rapi/boss;bossb\x06proto3"
 
 var (
 	file_boss_user_proto_rawDescOnce sync.Once

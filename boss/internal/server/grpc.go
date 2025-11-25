@@ -5,6 +5,7 @@ import (
 	"boss/internal/conf"
 	"boss/internal/service"
 
+	validate "github.com/go-kratos/kratos/contrib/middleware/validate/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
@@ -18,6 +19,8 @@ func NewGRPCServer(c *conf.Server,
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			recovery.Recovery(),
+			// 添加参数验证
+			validate.ProtoValidate(),
 		),
 	}
 	if c.Grpc.Network != "" {

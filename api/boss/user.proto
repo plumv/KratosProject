@@ -4,14 +4,17 @@ package boss;
 import "base/base.proto";
 import "google/protobuf/wrappers.proto";
 import "openapi/v3/annotations.proto";
+import "buf/validate/validate.proto";
 
 option go_package = "api/boss;boss";
 
 message UserReply{
+  // 定义结构体UserReply的swagger文档
   option (openapi.v3.schema) = {
     title: "用户基本信息响应";
   };
   google.protobuf.StringValue  id = 1 [
+    // 定义字段id的swagger文档
     (openapi.v3.property) = {
       nullable: false;
       title: "主键";
@@ -48,25 +51,33 @@ message CreateUserRequest {
     (openapi.v3.property) = {
       nullable: false;
       title: "用户名";
-    }
+    },
+    // 定义字段name的验证规则-必填
+    (buf.validate.field).required = true
   ];
   google.protobuf.Int32Value age = 2 [
     (openapi.v3.property) = {
       nullable: false;
       title: "用户年龄";
-    }
+    },
+    // 可以同时定义多个验证规则
+    (buf.validate.field).int32 = {gte: 0,lte: 200},
+    (buf.validate.field).required = true
   ];
   google.protobuf.StringValue email = 3 [
     (openapi.v3.property) = {
       nullable: false;
       title: "用户邮箱";
-    }
+    },
+    (buf.validate.field).string.email = true,
+    (buf.validate.field).required = true
   ];
   google.protobuf.StringValue password = 4 [
     (openapi.v3.property) = {
       nullable: false;
       title: "用户密码";
-    }
+    },
+    (buf.validate.field).required = true
   ];
 }
 

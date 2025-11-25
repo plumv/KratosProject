@@ -809,7 +809,7 @@ cd cd boss/internal/data/ent
 
 ## 添加swager文档说明
 
-第一步：先在api目录下，加入[openapi](./api/third_party/openapi)文件
+第一步：先在api目录下的第三方包目录中，加入[openapi](./api/third_party/openapi)文件
 
 第二步：在proto中定义说明内容
 
@@ -885,6 +885,79 @@ message UserReply{
     :./boss ：表示生成的openapi.yaml位于当前目录下的boss目录下
 
 boss/boss.proto: 最后proto文件地址。
+
+## 参数验证
+
+第一步：先在api目录下的第三方包目录中，加入[validate](api/third_party/buf/validate)依赖包
+
+第二步：在proto文件中添加验证机制
+
+```protobuf
+import "google/protobuf/wrappers.proto";
+import "openapi/v3/annotations.proto";
+import "buf/validate/validate.proto";
+
+message CreateUserRequest {
+  option (openapi.v3.schema) = {
+    nullable: false;
+    read_only: false;
+    write_only: true;
+    title: "用户创建请求";
+  };
+  google.protobuf.StringValue name = 1 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户名";
+    },
+    // 定义字段name的验证规则-必填
+    (buf.validate.field).required = true
+  ];
+  google.protobuf.Int32Value age = 2 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户年龄";
+    },
+    // 可以同时定义多个验证规则
+    (buf.validate.field).int32 = {gte: 0,lte: 200},
+    (buf.validate.field).required = true
+  ];
+  google.protobuf.StringValue email = 3 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户邮箱";
+    },
+    (buf.validate.field).string.email = true,
+    (buf.validate.field).required = true
+  ];
+  google.protobuf.StringValue password = 4 [
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "用户密码";
+    },
+    (buf.validate.field).required = true
+  ];
+}
+
+```
+
+第三步：正常使用kratos生成client的命令进行生成代码
+
+```shell
+cd api
+kratos proto client boss/user.proto
+```
+
+第四步：在http和grpc服务中应用验证中间件
+
+```go
+import validate "github.com/go-kratos/kratos/contrib/middleware/validate/v2"
+
+http.Middleware(
+recovery.Recovery(),
+// 添加参数验证
+validate.ProtoValidate(),
+),
+```
 
 #  截断
 
