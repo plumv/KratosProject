@@ -26,11 +26,11 @@ var File_boss_boss_proto protoreflect.FileDescriptor
 
 const file_boss_boss_proto_rawDesc = "" +
 	"\n" +
-	"\x0fboss/boss.proto\x12\x04boss\x1a\x1cgoogle/api/annotations.proto\x1a\x1copenapi/v3/annotations.proto\x1a\x0fboss/user.proto\x1a\x0fboss/role.proto2\x9a\a\n" +
-	"\x04User\x12\x97\x01\n" +
+	"\x0fboss/boss.proto\x12\x04boss\x1a\x1cgoogle/api/annotations.proto\x1a\x1copenapi/v3/annotations.proto\x1a\x0fboss/user.proto\x1a\x0fboss/role.proto2\xa8\a\n" +
+	"\x04User\x12\xa5\x01\n" +
 	"\n" +
-	"CreateUser\x12\x17.boss.CreateUserRequest\x1a\x15.boss.CreateUserReply\"Y\xbaGB\n" +
-	"\f用户服务\x12\f创建用户\x1a$传入用户基本信息创建用户\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/api/user\x12\x97\x01\n" +
+	"CreateUser\x12\x17.boss.CreateUserRequest\x1a\x15.boss.CreateUserReply\"g\xbaGP\n" +
+	"\f用户服务\x12\f创建用户\x1a$传入用户基本信息创建用户*\foperation_id\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/api/user\x12\x97\x01\n" +
 	"\n" +
 	"UpdateUser\x12\x17.boss.UpdateUserRequest\x1a\x15.boss.UpdateUserReply\"Y\xbaG>\n" +
 	"\f用户服务\x12\f更新用户\x1a 根据用户ID更新用户信息\x82\xd3\xe4\x93\x02\x12:\x01*\x1a\r/api/user/:id\x12\x8e\x01\n" +
@@ -42,11 +42,20 @@ const file_boss_boss_proto_rawDesc = "" +
 	"\bListUser\x12\x15.boss.ListUserRequest\x1a\x13.boss.ListUserReply\"^\xbaGB\n" +
 	"\f用户服务\x12\x12查询用户列表\x1a\x1e条件查询所有用户信息\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/user/list\x12\xa5\x01\n" +
 	"\bPageUser\x12\x15.boss.PageUserRequest\x1a\x13.boss.PageUserReply\"m\xbaGQ\n" +
-	"\f用户服务\x12\x12分页查询用户\x1a-条件查询所有用户信息并分页展示\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/user/pageB\xe2\x01\xbaG\xc7\x01\x12\xb4\x01\n" +
+	"\f用户服务\x12\x12分页查询用户\x1a-条件查询所有用户信息并分页展示\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/user/page2\xf9\x03\n" +
+	"\x04Role\x12R\n" +
+	"\n" +
+	"CreateRole\x12\x17.boss.CreateRoleRequest\x1a\x15.boss.CreateRoleReply\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/api/role\x12V\n" +
+	"\n" +
+	"UpdateRole\x12\x17.boss.UpdateRoleRequest\x1a\x15.boss.UpdateRoleReply\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\x1a\r/api/role/:id\x12S\n" +
+	"\n" +
+	"DeleteRole\x12\x17.boss.DeleteRoleRequest\x1a\x15.boss.DeleteRoleReply\"\x15\x82\xd3\xe4\x93\x02\x0f*\r/api/role/:id\x12J\n" +
+	"\aGetRole\x12\x14.boss.GetRoleRequest\x1a\x12.boss.GetRoleReply\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/api/role/:id\x12Q\n" +
+	"\bListRole\x12\x15.boss.ListRoleRequest\x1a\x13.boss.ListRoleReply\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/role/list\x12Q\n" +
+	"\bPageRole\x12\x15.boss.PageRoleRequest\x1a\x13.boss.PageRoleReply\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/api/role/pageB\xd2\x01\xbaG\xb7\x01\x12\xb4\x01\n" +
 	"\rboss examples\">\n" +
 	"\x11gRPC-http project\x12\x17https://127.0.0.1:8000/\x1a\x10none@example.com*^\n" +
-	"\x14BSD 3-Clause License\x12Fhttps://github.com/grpc-ecosystem/grpc-gateway/blob/master/LICENSE.txt2\x031.0:\x0e\n" +
-	"\f用户服务\n" +
+	"\x14BSD 3-Clause License\x12Fhttps://github.com/grpc-ecosystem/grpc-gateway/blob/master/LICENSE.txt2\x031.0\n" +
 	"\x04bossP\x01Z\rapi/boss;bossb\x06proto3"
 
 var file_boss_boss_proto_goTypes = []any{
@@ -56,12 +65,24 @@ var file_boss_boss_proto_goTypes = []any{
 	(*GetUserRequest)(nil),    // 3: boss.GetUserRequest
 	(*ListUserRequest)(nil),   // 4: boss.ListUserRequest
 	(*PageUserRequest)(nil),   // 5: boss.PageUserRequest
-	(*CreateUserReply)(nil),   // 6: boss.CreateUserReply
-	(*UpdateUserReply)(nil),   // 7: boss.UpdateUserReply
-	(*DeleteUserReply)(nil),   // 8: boss.DeleteUserReply
-	(*GetUserReply)(nil),      // 9: boss.GetUserReply
-	(*ListUserReply)(nil),     // 10: boss.ListUserReply
-	(*PageUserReply)(nil),     // 11: boss.PageUserReply
+	(*CreateRoleRequest)(nil), // 6: boss.CreateRoleRequest
+	(*UpdateRoleRequest)(nil), // 7: boss.UpdateRoleRequest
+	(*DeleteRoleRequest)(nil), // 8: boss.DeleteRoleRequest
+	(*GetRoleRequest)(nil),    // 9: boss.GetRoleRequest
+	(*ListRoleRequest)(nil),   // 10: boss.ListRoleRequest
+	(*PageRoleRequest)(nil),   // 11: boss.PageRoleRequest
+	(*CreateUserReply)(nil),   // 12: boss.CreateUserReply
+	(*UpdateUserReply)(nil),   // 13: boss.UpdateUserReply
+	(*DeleteUserReply)(nil),   // 14: boss.DeleteUserReply
+	(*GetUserReply)(nil),      // 15: boss.GetUserReply
+	(*ListUserReply)(nil),     // 16: boss.ListUserReply
+	(*PageUserReply)(nil),     // 17: boss.PageUserReply
+	(*CreateRoleReply)(nil),   // 18: boss.CreateRoleReply
+	(*UpdateRoleReply)(nil),   // 19: boss.UpdateRoleReply
+	(*DeleteRoleReply)(nil),   // 20: boss.DeleteRoleReply
+	(*GetRoleReply)(nil),      // 21: boss.GetRoleReply
+	(*ListRoleReply)(nil),     // 22: boss.ListRoleReply
+	(*PageRoleReply)(nil),     // 23: boss.PageRoleReply
 }
 var file_boss_boss_proto_depIdxs = []int32{
 	0,  // 0: boss.User.CreateUser:input_type -> boss.CreateUserRequest
@@ -70,14 +91,26 @@ var file_boss_boss_proto_depIdxs = []int32{
 	3,  // 3: boss.User.GetUser:input_type -> boss.GetUserRequest
 	4,  // 4: boss.User.ListUser:input_type -> boss.ListUserRequest
 	5,  // 5: boss.User.PageUser:input_type -> boss.PageUserRequest
-	6,  // 6: boss.User.CreateUser:output_type -> boss.CreateUserReply
-	7,  // 7: boss.User.UpdateUser:output_type -> boss.UpdateUserReply
-	8,  // 8: boss.User.DeleteUser:output_type -> boss.DeleteUserReply
-	9,  // 9: boss.User.GetUser:output_type -> boss.GetUserReply
-	10, // 10: boss.User.ListUser:output_type -> boss.ListUserReply
-	11, // 11: boss.User.PageUser:output_type -> boss.PageUserReply
-	6,  // [6:12] is the sub-list for method output_type
-	0,  // [0:6] is the sub-list for method input_type
+	6,  // 6: boss.Role.CreateRole:input_type -> boss.CreateRoleRequest
+	7,  // 7: boss.Role.UpdateRole:input_type -> boss.UpdateRoleRequest
+	8,  // 8: boss.Role.DeleteRole:input_type -> boss.DeleteRoleRequest
+	9,  // 9: boss.Role.GetRole:input_type -> boss.GetRoleRequest
+	10, // 10: boss.Role.ListRole:input_type -> boss.ListRoleRequest
+	11, // 11: boss.Role.PageRole:input_type -> boss.PageRoleRequest
+	12, // 12: boss.User.CreateUser:output_type -> boss.CreateUserReply
+	13, // 13: boss.User.UpdateUser:output_type -> boss.UpdateUserReply
+	14, // 14: boss.User.DeleteUser:output_type -> boss.DeleteUserReply
+	15, // 15: boss.User.GetUser:output_type -> boss.GetUserReply
+	16, // 16: boss.User.ListUser:output_type -> boss.ListUserReply
+	17, // 17: boss.User.PageUser:output_type -> boss.PageUserReply
+	18, // 18: boss.Role.CreateRole:output_type -> boss.CreateRoleReply
+	19, // 19: boss.Role.UpdateRole:output_type -> boss.UpdateRoleReply
+	20, // 20: boss.Role.DeleteRole:output_type -> boss.DeleteRoleReply
+	21, // 21: boss.Role.GetRole:output_type -> boss.GetRoleReply
+	22, // 22: boss.Role.ListRole:output_type -> boss.ListRoleReply
+	23, // 23: boss.Role.PageRole:output_type -> boss.PageRoleReply
+	12, // [12:24] is the sub-list for method output_type
+	0,  // [0:12] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
@@ -98,7 +131,7 @@ func file_boss_boss_proto_init() {
 			NumEnums:      0,
 			NumMessages:   0,
 			NumExtensions: 0,
-			NumServices:   1,
+			NumServices:   2,
 		},
 		GoTypes:           file_boss_boss_proto_goTypes,
 		DependencyIndexes: file_boss_boss_proto_depIdxs,

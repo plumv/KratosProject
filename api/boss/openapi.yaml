@@ -13,6 +13,110 @@ info:
     url: https://github.com/grpc-ecosystem/grpc-gateway/blob/master/LICENSE.txt
   version: "1.0"
 paths:
+  /api/role:
+    post:
+      tags:
+        - Role
+      operationId: Role_CreateRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/boss.CreateRoleRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/boss.CreateRoleReply'
+  /api/role/:id:
+    get:
+      tags:
+        - Role
+      operationId: Role_GetRole
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/boss.GetRoleReply'
+    put:
+      tags:
+        - Role
+      operationId: Role_UpdateRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/boss.UpdateRoleRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/boss.UpdateRoleReply'
+    delete:
+      tags:
+        - Role
+      operationId: Role_DeleteRole
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/boss.DeleteRoleReply'
+  /api/role/list:
+    post:
+      tags:
+        - Role
+      operationId: Role_ListRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/boss.ListRoleRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/boss.ListRoleReply'
+  /api/role/page:
+    post:
+      tags:
+        - Role
+      operationId: Role_PageRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/boss.PageRoleRequest'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/boss.PageRoleReply'
     /api/user:
         post:
             tags:
@@ -177,6 +281,20 @@ components:
           sort:
             title: 是否顺序排序
             type: boolean
+      boss.CreateRoleReply:
+        type: object
+        properties:
+          r:
+            $ref: '#/components/schemas/base.ResultResp'
+          data:
+            $ref: '#/components/schemas/boss.RoleReply'
+      boss.CreateRoleRequest:
+        type: object
+        properties:
+          name:
+            type: string
+          desc:
+            type: string
       boss.CreateUserReply:
         title: 创建用户响应信息
             type: object
@@ -203,12 +321,24 @@ components:
                 password:
                   title: 用户密码
                     type: string
+      boss.DeleteRoleReply:
+        type: object
+        properties:
+          r:
+            $ref: '#/components/schemas/base.ResultResp'
       boss.DeleteUserReply:
         title: 用户删除响应
             type: object
             properties:
                 r:
                   $ref: '#/components/schemas/base.ResultResp'
+      boss.GetRoleReply:
+        type: object
+        properties:
+          r:
+            $ref: '#/components/schemas/base.ResultResp'
+          data:
+            $ref: '#/components/schemas/boss.RoleReply'
       boss.GetUserReply:
         title: 获取用户响应
             type: object
@@ -217,6 +347,22 @@ components:
                   $ref: '#/components/schemas/base.ResultResp'
                 data:
                   $ref: '#/components/schemas/boss.UserReply'
+      boss.ListRoleReply:
+        type: object
+        properties:
+          r:
+            $ref: '#/components/schemas/base.ResultResp'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/boss.RoleReply'
+      boss.ListRoleRequest:
+        type: object
+        properties:
+          sort:
+            $ref: '#/components/schemas/base.SortReq'
+          query:
+            $ref: '#/components/schemas/boss.QueryRoleRequest'
       boss.ListUserReply:
         title: 条件查询所有用户响应
             type: object
@@ -236,6 +382,26 @@ components:
                   $ref: '#/components/schemas/base.SortReq'
                 query:
                   $ref: '#/components/schemas/boss.QueryUserRequest'
+      boss.PageRoleReply:
+        type: object
+        properties:
+          r:
+            $ref: '#/components/schemas/base.ResultResp'
+          page:
+            $ref: '#/components/schemas/base.PageResp'
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/boss.RoleReply'
+      boss.PageRoleRequest:
+        type: object
+        properties:
+          page:
+            $ref: '#/components/schemas/base.PageReq'
+          sort:
+            $ref: '#/components/schemas/base.SortReq'
+          query:
+            $ref: '#/components/schemas/boss.QueryRoleRequest'
       boss.PageUserReply:
         title: 条件分页查询用户响应
             type: object
@@ -259,6 +425,14 @@ components:
                   $ref: '#/components/schemas/base.SortReq'
                 query:
                   $ref: '#/components/schemas/boss.QueryUserRequest'
+      boss.QueryRoleRequest:
+        type: object
+        properties:
+          name:
+            type: string
+          age:
+            type: integer
+            format: int32
       boss.QueryUserRequest:
         title: 用户查询条件请求
             type: object
@@ -270,6 +444,31 @@ components:
                   title: 用户年龄
                     type: integer
                     format: int32
+      boss.RoleReply:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          desc:
+            type: string
+      boss.UpdateRoleReply:
+        type: object
+        properties:
+          r:
+            $ref: '#/components/schemas/base.ResultResp'
+          data:
+            $ref: '#/components/schemas/boss.RoleReply'
+      boss.UpdateRoleRequest:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          desc:
+            type: string
       boss.UpdateUserReply:
         title: 用户更新响应
             type: object
@@ -313,4 +512,5 @@ components:
                   title: 用户邮箱
                     type: string
 tags:
+  - name: Role
     - name: User
