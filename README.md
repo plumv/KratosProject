@@ -366,15 +366,6 @@ service Role {
 }
 ```
 
-### 生成boss服务的swagger文档
-
-```shell
-# 安装命令工具
- go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
-# 执行生成命令
- protoc --proto_path=./ --proto_path=./third_party --openapi_out=fq_schema_naming=true,default_response=false:./boss boss/boss.proto
-```
-
 ## 创建boss服务
 
 ### 生成项目框架
@@ -816,7 +807,84 @@ cd cd boss/internal/data/ent
 
 ```
 
+## 添加swager文档说明
 
+第一步：先在api目录下，加入[openapi](./api/third_party/openapi)文件
+
+第二步：在proto中定义说明内容
+
+```protobuf
+import "google/api/annotations.proto";
+import "openapi/v3/annotations.proto";
+
+// 定义文档说明
+option (openapi.v3.document) = {
+  info: {
+    title: "boss examples";
+    version: "1.0";
+    contact: {
+      name: "gRPC-http project";
+      url: "https://127.0.0.1:8000/";
+      email: "none@example.com";
+    };
+    license: {
+      name: "BSD 3-Clause License";
+      url: "https://github.com/grpc-ecosystem/grpc-gateway/blob/master/LICENSE.txt";
+    };
+  };
+};
+service User {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserReply){
+    option (google.api.http) = {
+      post: "/api/user";
+      body: "*";
+    };
+    // 定义当前接口的说明
+    option (openapi.v3.operation) = {
+      // tags表示组
+      tags: ["用户服务"];
+      operation_id: "operation_id";
+      // summary 表示接口名称
+      summary: "创建用户";
+      // 表示接口描述
+      description: "传入用户基本信息创建用户";
+    };
+  };
+}
+message UserReply{
+  // 定义当前结构体的整个说明
+  option (openapi.v3.schema) = {
+    title: "用户基本信息响应";
+  };
+  required string id = 1 [
+    // 定义当前属性的说明
+    (openapi.v3.property) = {
+      nullable: false;
+      title: "主键";
+    }
+  ];
+}
+```
+
+第三步：安装protoc命令 生成openapi.yaml文件
+
+```shell
+# 安装命令工具
+ go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+# 执行生成命令
+ cd api
+ protoc --proto_path=./ --proto_path=./third_party --openapi_out=fq_schema_naming=true,default_response=false:./boss boss/boss.proto
+```
+
+--proto_path：表示将那些路径纳入proto扫描路径
+
+--openapi_out：表示配置openapi.yaml的生成配置和地址
+
+    fq_schema_naming=true ： 用“包名.消息名”作为 schema 标题
+    default_response=false ： 是否给每个 operation 自动加默认响应
+    :./boss ：表示生成的openapi.yaml位于当前目录下的boss目录下
+
+boss/boss.proto: 最后proto文件地址。
 
 #  截断
 

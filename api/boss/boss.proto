@@ -11,6 +11,7 @@ option go_package = "api/boss;boss";
 option java_multiple_files = true;
 option java_package = "boss";
 
+// 定义文档说明
 option (openapi.v3.document) = {
   info: {
     title: "boss examples";
@@ -36,6 +37,7 @@ service User {
       post: "/api/user";
       body: "*";
     };
+    // 定义当前接口的说明
     option (openapi.v3.operation) = {
       // tags表示组
       tags: ["用户服务"];
