@@ -39,3 +39,6 @@ bin/
 
 go.sum
 go.work.sum
+
+# custom
+api/openapi.yaml
